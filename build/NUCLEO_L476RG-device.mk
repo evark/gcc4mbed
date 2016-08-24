@@ -9,7 +9,7 @@
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and LIKE_CORTEX_M4 LIKE_MBED
+# See the License for the specific language governing permissions and
 # limitations under the License.
 
 # Vendor/device for which the library should be built.
@@ -72,8 +72,8 @@ DEVICE_MRI_LIB :=
 
 
 # Linker script to be used.  Indicates what code should be placed where in memory.
-NUCLEO_F401RE_LSCRIPT ?= $(GCC4MBED_DIR)/external/mbed/libraries/mbed/targets/cmsis/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/TOOLCHAIN_GCC_ARM/STM32F401XE.ld
-LSCRIPT = $(NUCLEO_F401RE_LSCRIPT)
+NUCLEO_L476RG_LSCRIPT ?= $(GCC4MBED_DIR)/external/mbed/libraries/mbed/targets/cmsis/TARGET_STM/TARGET_STM32L4/TARGET_NUCLEO_L476RG/TOOLCHAIN_GCC_ARM/STM32L476XX.ld
+LSCRIPT = $(NUCLEO_L476RG_LSCRIPT)
 
 
 include $(GCC4MBED_DIR)/build/device-common.mk
