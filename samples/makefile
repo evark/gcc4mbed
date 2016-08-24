@@ -14,7 +14,6 @@
 #
 # Directories to be built
 DIRS := HelloWorld\
-        Blink\
         Ticker\
         rtos_basic\
         StdIO
