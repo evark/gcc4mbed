@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 PROJECT         := StdIO
-DEVICES         := NUCLEO_F401RE
+DEVICES         := NUCLEO_F401RE NUCLEO_L476RG
 GCC4MBED_DIR    := ../..
 NO_FLOAT_SCANF  := 1
 NO_FLOAT_PRINTF := 1
