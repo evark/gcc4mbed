@@ -155,21 +155,21 @@ endif
 
 # Configure MRI variables based on GCC4MBED_TYPE build type variable.
 ifeq "$(GCC4MBED_TYPE)" "Release"
-OPTIMIZATION ?= 2
+OPTIMIZATION ?= s
 MRI_ENABLE := 0
 MRI_SEMIHOST_STDIO := 0
 endif
 
 
 ifeq "$(GCC4MBED_TYPE)" "Debug"
-OPTIMIZATION ?= 0
+OPTIMIZATION ?= g
 MRI_ENABLE ?= 1
 MRI_SEMIHOST_STDIO ?= $(MRI_ENABLE)
 endif
 
 
 ifeq "$(GCC4MBED_TYPE)" "Checked"
-OPTIMIZATION ?= 2
+OPTIMIZATION ?= s
 MRI_ENABLE := 1
 MRI_SEMIHOST_STDIO ?= $(MRI_ENABLE)
 endif

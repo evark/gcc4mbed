@@ -21,8 +21,8 @@ ifeq "$(findstring $(MBED_DEVICE),$(DEVICES))" "$(MBED_DEVICE)"
 # Setup flags that are common across the different pieces of code to be built.
 ###############################################################################
 # Optimization levels to be used for Debug and Release versions of libraries.
-DEBUG_OPTIMIZATION   := 0
-RELEASE_OPTIMIZATION := 2
+DEBUG_OPTIMIZATION   := g
+RELEASE_OPTIMIZATION := s
 
 # Compiler flags used to enable creation of header dependency files.
 DEP_FLAGS := -MMD -MP
