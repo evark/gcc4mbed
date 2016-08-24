@@ -66,6 +66,9 @@ static void init_uart(serial_t *obj)
         UartHandle.Init.Mode = UART_MODE_TX_RX;
     }
 
+    // Fix because HAL_RCC_GetHCLKFreq() don't update  anymore SystemCoreClock
+    SystemCoreClockUpdate();
+
     HAL_UART_Init(&UartHandle);
 }
 
@@ -81,28 +84,38 @@ void serial_init(serial_t *obj, PinName tx, PinName rx)
 
     // Enable UART clock
     if (obj->uart == UART_1) {
+        __HAL_RCC_USART1_FORCE_RESET();
+        __HAL_RCC_USART1_RELEASE_RESET();
         __USART1_CLK_ENABLE();
         obj->index = 0;
     }
 
     if (obj->uart == UART_2) {
+        __HAL_RCC_USART2_FORCE_RESET();
+        __HAL_RCC_USART2_RELEASE_RESET();
         __USART2_CLK_ENABLE();
         obj->index = 1;
     }
 
     if (obj->uart == UART_3) {
+        __HAL_RCC_USART3_FORCE_RESET();
+        __HAL_RCC_USART3_RELEASE_RESET();
         __USART3_CLK_ENABLE();
         obj->index = 2;
     }
 
 #if defined(UART4_BASE)
     if (obj->uart == UART_4) {
+        __HAL_RCC_UART4_FORCE_RESET();
+        __HAL_RCC_UART4_RELEASE_RESET();
         __UART4_CLK_ENABLE();
         obj->index = 3;
     }
 #endif
 #if defined(UART5_BASE)
     if (obj->uart == UART_5) {
+        __HAL_RCC_UART5_FORCE_RESET();
+        __HAL_RCC_UART5_RELEASE_RESET();
         __UART5_CLK_ENABLE();
         obj->index = 4;
     }
@@ -328,7 +341,7 @@ void serial_irq_set(serial_t *obj, SerialIrq irq, uint32_t enable)
             // Check if TxIrq is disabled too
             if ((UartHandle.Instance->CR1 & USART_CR1_TXEIE) == 0) all_disabled = 1;
         } else { // TxIrq
-            __HAL_UART_DISABLE_IT(&UartHandle, UART_IT_TXE);
+            __HAL_UART_DISABLE_IT(&UartHandle, UART_IT_TC);
             // Check if RxIrq is disabled too
             if ((UartHandle.Instance->CR1 & USART_CR1_RXNEIE) == 0) all_disabled = 1;
         }

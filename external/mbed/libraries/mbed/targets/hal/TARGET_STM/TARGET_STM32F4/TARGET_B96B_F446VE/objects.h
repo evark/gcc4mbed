@@ -65,24 +65,6 @@ struct dac_s {
     uint8_t channel;
 };
 
-struct serial_s {
-    int index;
-    uint32_t baudrate;
-    uint32_t databits;
-    uint32_t stopbits;
-    uint32_t parity;
-    PinName pin_tx;
-    PinName pin_rx;
-#if DEVICE_SERIAL_ASYNCH
-    uint32_t events;
-#endif
-#if DEVICE_SERIAL_FC
-    uint32_t hw_flow_ctl;
-    PinName pin_rts;
-    PinName pin_cts;
-#endif
-};
-
 struct spi_s {
     SPIName spi;
     uint32_t bits;
@@ -102,20 +84,12 @@ struct i2c_s {
     uint32_t slave;
 };
 
-struct pwmout_s {
-    PWMName pwm;
-    PinName pin;
-    uint32_t period;
-    uint32_t pulse;
-    uint8_t channel;
-    uint8_t inverted;
-};
-
 struct can_s {
     CANName can;
     int index; // Used by irq	
 };
 
+#include "common_objects.h"
 #include "gpio_object.h"
 
 #ifdef __cplusplus

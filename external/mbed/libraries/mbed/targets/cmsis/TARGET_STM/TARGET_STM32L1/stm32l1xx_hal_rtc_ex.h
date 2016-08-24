@@ -2,13 +2,13 @@
   ******************************************************************************
   * @file    stm32l1xx_hal_rtc_ex.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    5-September-2014
+  * @version V1.2.0
+  * @date    01-July-2016
   * @brief   Header file of RTC HAL Extension module.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2014 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -70,7 +70,7 @@ typedef struct
   uint32_t Trigger;                     /*!< Specifies the Tamper Trigger.
                                              This parameter can be a value of @ref  RTCEx_Tamper_Trigger_Definitions */
 
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE) 
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX) 
   uint32_t Filter;                      /*!< Specifies the RTC Filter Tamper.
                                              This parameter can be a value of @ref RTCEx_Tamper_Filter_Definitions */
   
@@ -85,7 +85,7 @@ typedef struct
  
   uint32_t TimeStampOnTamperDetection;  /*!< Specifies the TimeStampOnTamperDetection.
                                              This parameter can be a value of @ref RTCEx_Tamper_TimeStampOnTamperDetection_Definitions */                      
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 }RTC_TamperTypeDef;
 
 /** 
@@ -103,13 +103,20 @@ typedef struct
   uint8_t Seconds;          /*!< Specifies the RTC Time Seconds.
                                  This parameter must be a number between Min_Data = 0 and Max_Data = 59 */
   
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE) 
-  uint32_t SubSeconds;      /*!< Specifies the RTC Time SubSeconds.
-                                 This parameter must be a number between Min_Data = 0 and Max_Data = 59 */
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
-  
   uint8_t TimeFormat;       /*!< Specifies the RTC AM/PM Time.
                                  This parameter can be a value of @ref RTC_AM_PM_Definitions */ 
+  
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX) 
+  uint32_t SubSeconds;     /*!< Specifies the RTC_SSR RTC Sub Second register content.
+                                 This parameter corresponds to a time unit range between [0-1] Second
+                                 with [1 Sec / SecondFraction +1] granularity */
+ 
+  uint32_t SecondFraction;  /*!< Specifies the range or granularity of Sub Second register content
+                                 corresponding to Synchronous pre-scaler factor value (PREDIV_S)
+                                 This parameter corresponds to a time unit range between [0-1] Second
+                                 with [1 Sec / SecondFraction +1] granularity.
+                                 This field will be used only by HAL_RTC_GetTime function */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
   
   uint32_t DayLightSaving;  /*!< Specifies RTC_DayLightSaveOperation: the value of hour adjustment. 
                                  This parameter can be a value of @ref RTC_DayLightSaving_Definitions */
@@ -129,10 +136,10 @@ typedef struct
   uint32_t AlarmMask;            /*!< Specifies the RTC Alarm Masks.
                                       This parameter can be a value of @ref RTC_AlarmMask_Definitions */
   
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
   uint32_t AlarmSubSecondMask;   /*!< Specifies the RTC Alarm SubSeconds Masks.
                                       This parameter can be a value of @ref RTC_Alarm_Sub_Seconds_Masks_Definitions */                                   
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 
   uint32_t AlarmDateWeekDaySel;  /*!< Specifies the RTC Alarm is on Date or WeekDay.
                                       This parameter can be a value of @ref RTC_AlarmDateWeekDay_Definitions */
@@ -156,12 +163,12 @@ typedef struct
 /** @defgroup RTC_Masks_Definitions Masks Definitions
   * @{
   */  
-#define RTC_TR_RESERVED_MASK    ((uint32_t)0x007F7F7F)
-#define RTC_DR_RESERVED_MASK    ((uint32_t)0x00FFFF3F) 
-#define RTC_INIT_MASK           ((uint32_t)0xFFFFFFFF)  
-#define RTC_RSF_MASK            ((uint32_t)0xFFFFFF5F)
+#define RTC_TR_RESERVED_MASK    (0x007F7F7FU)
+#define RTC_DR_RESERVED_MASK    (0x00FFFF3FU) 
+#define RTC_INIT_MASK           ((uint32_t)0xFFFFFFFFU)  
+#define RTC_RSF_MASK            ((uint32_t)0xFFFFFF5FU)
 
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
 #define RTC_FLAGS_MASK          ((uint32_t)(RTC_FLAG_ALRAWF | RTC_FLAG_ALRBWF | RTC_FLAG_WUTWF | \
                                             RTC_FLAG_SHPF | RTC_FLAG_INITS | RTC_FLAG_RSF | \
                                             RTC_FLAG_INITF | RTC_FLAG_ALRAF | RTC_FLAG_ALRBF | \
@@ -176,7 +183,7 @@ typedef struct
                                             RTC_FLAG_TAMP1F | \
                                             RTC_FLAG_RECALPF))
 
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 /**
   * @}
   */
@@ -184,11 +191,11 @@ typedef struct
 /** @defgroup RTC_Synchronous_Predivider Synchronous Predivider 
   * @{
   */ 
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
 #define IS_RTC_SYNCH_PREDIV(PREDIV)    ((PREDIV) <= (uint32_t)0x7FFF)
 #elif defined(STM32L100xB) || defined (STM32L151xB) || defined (STM32L152xB)
 #define IS_RTC_SYNCH_PREDIV(PREDIV)    ((PREDIV) <= (uint32_t)0x1FFF)
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 /**
   * @}
   */ 
@@ -196,15 +203,15 @@ typedef struct
 /** @defgroup RTC_Interrupts_Definitions Interrupts Definitions 
   * @{
   */ 
-#define RTC_IT_TS                         ((uint32_t)0x00008000)
-#define RTC_IT_WUT                        ((uint32_t)0x00004000)
-#define RTC_IT_ALRB                       ((uint32_t)0x00002000)
-#define RTC_IT_ALRA                       ((uint32_t)0x00001000)
-#define RTC_IT_TAMP1                      ((uint32_t)0x00020000)
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
-#define RTC_IT_TAMP2                      ((uint32_t)0x00040000)
-#define RTC_IT_TAMP3                      ((uint32_t)0x00080000)
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#define RTC_IT_TS                         ((uint32_t)RTC_CR_TSIE)
+#define RTC_IT_WUT                        ((uint32_t)RTC_CR_WUTIE)
+#define RTC_IT_ALRB                       ((uint32_t)RTC_CR_ALRBIE)
+#define RTC_IT_ALRA                       ((uint32_t)RTC_CR_ALRAIE)
+#define RTC_IT_TAMP1                      ((uint32_t)(RTC_TAFCR_TAMPIE | RTC_TAFCR_TAMP1E))
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
+#define RTC_IT_TAMP2                      ((uint32_t)(RTC_TAFCR_TAMPIE | RTC_TAFCR_TAMP2E))
+#define RTC_IT_TAMP3                      ((uint32_t)(RTC_TAFCR_TAMPIE | RTC_TAFCR_TAMP3E))
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 /**
   * @}
   */
@@ -212,26 +219,26 @@ typedef struct
 /** @defgroup RTC_Flags_Definitions Flags Definitions 
   * @{
   */ 
-#define RTC_FLAG_RECALPF                  ((uint32_t)0x00010000)
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
-#define RTC_FLAG_TAMP3F                   ((uint32_t)0x00008000)
-#define RTC_FLAG_TAMP2F                   ((uint32_t)0x00004000)
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
-#define RTC_FLAG_TAMP1F                   ((uint32_t)0x00002000)
-#define RTC_FLAG_TSOVF                    ((uint32_t)0x00001000)
-#define RTC_FLAG_TSF                      ((uint32_t)0x00000800)
-#define RTC_FLAG_WUTF                     ((uint32_t)0x00000400)
-#define RTC_FLAG_ALRBF                    ((uint32_t)0x00000200)
-#define RTC_FLAG_ALRAF                    ((uint32_t)0x00000100)
-#define RTC_FLAG_INITF                    ((uint32_t)0x00000040)
-#define RTC_FLAG_RSF                      ((uint32_t)0x00000020)
-#define RTC_FLAG_INITS                    ((uint32_t)0x00000010)
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
-#define RTC_FLAG_SHPF                     ((uint32_t)0x00000008)
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
-#define RTC_FLAG_WUTWF                    ((uint32_t)0x00000004)
-#define RTC_FLAG_ALRBWF                   ((uint32_t)0x00000002)
-#define RTC_FLAG_ALRAWF                   ((uint32_t)0x00000001)
+#define RTC_FLAG_RECALPF                  ((uint32_t)RTC_ISR_RECALPF)
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
+#define RTC_FLAG_TAMP3F                   ((uint32_t)RTC_ISR_TAMP3F)
+#define RTC_FLAG_TAMP2F                   ((uint32_t)RTC_ISR_TAMP2F)
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
+#define RTC_FLAG_TAMP1F                   ((uint32_t)RTC_ISR_TAMP1F)
+#define RTC_FLAG_TSOVF                    ((uint32_t)RTC_ISR_TSOVF)
+#define RTC_FLAG_TSF                      ((uint32_t)RTC_ISR_TSF)
+#define RTC_FLAG_WUTF                     ((uint32_t)RTC_ISR_WUTF)
+#define RTC_FLAG_ALRBF                    ((uint32_t)RTC_ISR_ALRBF)
+#define RTC_FLAG_ALRAF                    ((uint32_t)RTC_ISR_ALRAF)
+#define RTC_FLAG_INITF                    ((uint32_t)RTC_ISR_INITF)
+#define RTC_FLAG_RSF                      ((uint32_t)RTC_ISR_RSF)
+#define RTC_FLAG_INITS                    ((uint32_t)RTC_ISR_INITS)
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
+#define RTC_FLAG_SHPF                     ((uint32_t)RTC_ISR_SHPF)
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
+#define RTC_FLAG_WUTWF                    ((uint32_t)RTC_ISR_WUTWF)
+#define RTC_FLAG_ALRBWF                   ((uint32_t)RTC_ISR_ALRBWF)
+#define RTC_FLAG_ALRAWF                   ((uint32_t)RTC_ISR_ALRAWF)
 /**
   * @}
   */
@@ -239,10 +246,10 @@ typedef struct
 /** @defgroup RTCEx_Output_selection_Definitions Output selection Definitions 
   * @{
   */ 
-#define RTC_OUTPUT_DISABLE             ((uint32_t)0x00000000)
-#define RTC_OUTPUT_ALARMA              ((uint32_t)0x00200000)
-#define RTC_OUTPUT_ALARMB              ((uint32_t)0x00400000)
-#define RTC_OUTPUT_WAKEUP              ((uint32_t)0x00600000)
+#define RTC_OUTPUT_DISABLE             (0x00000000U)
+#define RTC_OUTPUT_ALARMA              (0x00200000U)
+#define RTC_OUTPUT_ALARMB              (0x00400000U)
+#define RTC_OUTPUT_WAKEUP              (0x00600000U)
  
 #define IS_RTC_OUTPUT(OUTPUT) (((OUTPUT) == RTC_OUTPUT_DISABLE) || \
                                ((OUTPUT) == RTC_OUTPUT_ALARMA)  || \
@@ -256,44 +263,44 @@ typedef struct
   * @{
   */
 #if RTC_BKP_NUMBER > 0
-#define RTC_BKP_DR0                       ((uint32_t)0x00000000)
-#define RTC_BKP_DR1                       ((uint32_t)0x00000001)
-#define RTC_BKP_DR2                       ((uint32_t)0x00000002)
-#define RTC_BKP_DR3                       ((uint32_t)0x00000003)
-#define RTC_BKP_DR4                       ((uint32_t)0x00000004)
+#define RTC_BKP_DR0                       (0x00000000U)
+#define RTC_BKP_DR1                       (0x00000001U)
+#define RTC_BKP_DR2                       (0x00000002U)
+#define RTC_BKP_DR3                       (0x00000003U)
+#define RTC_BKP_DR4                       (0x00000004U)
 #endif /* RTC_BKP_NUMBER > 0 */
    
 #if RTC_BKP_NUMBER > 5
-#define RTC_BKP_DR5                       ((uint32_t)0x00000005)
-#define RTC_BKP_DR6                       ((uint32_t)0x00000006)
-#define RTC_BKP_DR7                       ((uint32_t)0x00000007)
-#define RTC_BKP_DR8                       ((uint32_t)0x00000008)
-#define RTC_BKP_DR9                       ((uint32_t)0x00000009)
-#define RTC_BKP_DR10                      ((uint32_t)0x0000000A)
-#define RTC_BKP_DR11                      ((uint32_t)0x0000000B)
-#define RTC_BKP_DR12                      ((uint32_t)0x0000000C)
-#define RTC_BKP_DR13                      ((uint32_t)0x0000000D)
-#define RTC_BKP_DR14                      ((uint32_t)0x0000000E)
-#define RTC_BKP_DR15                      ((uint32_t)0x0000000F)
-#define RTC_BKP_DR16                      ((uint32_t)0x00000010)
-#define RTC_BKP_DR17                      ((uint32_t)0x00000011)
-#define RTC_BKP_DR18                      ((uint32_t)0x00000012)
-#define RTC_BKP_DR19                      ((uint32_t)0x00000013)
+#define RTC_BKP_DR5                       (0x00000005U)
+#define RTC_BKP_DR6                       (0x00000006U)
+#define RTC_BKP_DR7                       (0x00000007U)
+#define RTC_BKP_DR8                       (0x00000008U)
+#define RTC_BKP_DR9                       (0x00000009U)
+#define RTC_BKP_DR10                      (0x0000000AU)
+#define RTC_BKP_DR11                      (0x0000000BU)
+#define RTC_BKP_DR12                      (0x0000000CU)
+#define RTC_BKP_DR13                      (0x0000000DU)
+#define RTC_BKP_DR14                      (0x0000000EU)
+#define RTC_BKP_DR15                      (0x0000000FU)
+#define RTC_BKP_DR16                      (0x00000010U)
+#define RTC_BKP_DR17                      (0x00000011U)
+#define RTC_BKP_DR18                      (0x00000012U)
+#define RTC_BKP_DR19                      (0x00000013U)
 #endif /* RTC_BKP_NUMBER > 5 */
    
 #if RTC_BKP_NUMBER > 20
-#define RTC_BKP_DR20                      ((uint32_t)0x00000014)
-#define RTC_BKP_DR21                      ((uint32_t)0x00000015)
-#define RTC_BKP_DR22                      ((uint32_t)0x00000016)
-#define RTC_BKP_DR23                      ((uint32_t)0x00000017)
-#define RTC_BKP_DR24                      ((uint32_t)0x00000018)
-#define RTC_BKP_DR25                      ((uint32_t)0x00000019)
-#define RTC_BKP_DR26                      ((uint32_t)0x0000001A)
-#define RTC_BKP_DR27                      ((uint32_t)0x0000001B)
-#define RTC_BKP_DR28                      ((uint32_t)0x0000001C)
-#define RTC_BKP_DR29                      ((uint32_t)0x0000001D)
-#define RTC_BKP_DR30                      ((uint32_t)0x0000001E)
-#define RTC_BKP_DR31                      ((uint32_t)0x0000001F)
+#define RTC_BKP_DR20                      (0x00000014U)
+#define RTC_BKP_DR21                      (0x00000015U)
+#define RTC_BKP_DR22                      (0x00000016U)
+#define RTC_BKP_DR23                      (0x00000017U)
+#define RTC_BKP_DR24                      (0x00000018U)
+#define RTC_BKP_DR25                      (0x00000019U)
+#define RTC_BKP_DR26                      (0x0000001AU)
+#define RTC_BKP_DR27                      (0x0000001BU)
+#define RTC_BKP_DR28                      (0x0000001CU)
+#define RTC_BKP_DR29                      (0x0000001DU)
+#define RTC_BKP_DR30                      (0x0000001EU)
+#define RTC_BKP_DR31                      (0x0000001FU)
 #endif /* RTC_BKP_NUMBER > 20 */
    
 #define IS_RTC_BKP(BKP)                   ((BKP) < (uint32_t) RTC_BKP_NUMBER)
@@ -304,8 +311,8 @@ typedef struct
 /** @defgroup RTCEx_Time_Stamp_Edges_Definitions Time Stamp Edges Definitions
   * @{
   */
-#define RTC_TIMESTAMPEDGE_RISING          ((uint32_t)0x00000000)
-#define RTC_TIMESTAMPEDGE_FALLING         ((uint32_t)0x00000008)
+#define RTC_TIMESTAMPEDGE_RISING          (0x00000000U)
+#define RTC_TIMESTAMPEDGE_FALLING         (0x00000008U)
 
 #define IS_TIMESTAMP_EDGE(EDGE) (((EDGE) == RTC_TIMESTAMPEDGE_RISING) || \
                                  ((EDGE) == RTC_TIMESTAMPEDGE_FALLING))
@@ -317,16 +324,16 @@ typedef struct
   * @{
   */
 #define RTC_TAMPER_1                    RTC_TAFCR_TAMP1E
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
 #define RTC_TAMPER_2                    RTC_TAFCR_TAMP2E
 #define RTC_TAMPER_3                    RTC_TAFCR_TAMP3E
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)
-#define IS_TAMPER(TAMPER) (((~(RTC_TAMPER_1|RTC_TAMPER_2|RTC_TAMPER_3) & (TAMPER)) == (uint32_t)RESET) && ((TAMPER) != (uint32_t)RESET))
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)
+#define IS_RTC_TAMPER(TAMPER) (((~(RTC_TAMPER_1|RTC_TAMPER_2|RTC_TAMPER_3) & (TAMPER)) == (uint32_t)RESET) && ((TAMPER) != (uint32_t)RESET))
 #else
-#define IS_TAMPER(TAMPER) ((TAMPER) == RTC_TAMPER_1)
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#define IS_RTC_TAMPER(TAMPER) ((TAMPER) == RTC_TAMPER_1)
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 /**
   * @}
   */
@@ -334,40 +341,40 @@ typedef struct
 /** @defgroup RTCEx_Tamper_Trigger_Definitions Tamper Trigger Definitions 
   * @{
   */ 
-#define RTC_TAMPERTRIGGER_RISINGEDGE       ((uint32_t)0x00000000)
-#define RTC_TAMPERTRIGGER_FALLINGEDGE      ((uint32_t)0x00000002)
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
+#define RTC_TAMPERTRIGGER_RISINGEDGE       (0x00000000U)
+#define RTC_TAMPERTRIGGER_FALLINGEDGE      (0x00000002U)
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
 #define RTC_TAMPERTRIGGER_LOWLEVEL         RTC_TAMPERTRIGGER_RISINGEDGE
 #define RTC_TAMPERTRIGGER_HIGHLEVEL        RTC_TAMPERTRIGGER_FALLINGEDGE
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
-#define IS_TAMPER_TRIGGER(TRIGGER) (((TRIGGER) == RTC_TAMPERTRIGGER_RISINGEDGE) || \
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
+#define IS_RTC_TAMPER_TRIGGER(TRIGGER) (((TRIGGER) == RTC_TAMPERTRIGGER_RISINGEDGE) || \
                                         ((TRIGGER) == RTC_TAMPERTRIGGER_FALLINGEDGE) || \
                                         ((TRIGGER) == RTC_TAMPERTRIGGER_LOWLEVEL) || \
                                         ((TRIGGER) == RTC_TAMPERTRIGGER_HIGHLEVEL)) 
 #elif defined(STM32L100xB) || defined (STM32L151xB) || defined (STM32L152xB)
-#define IS_TAMPER_TRIGGER(TRIGGER) (((TRIGGER) == RTC_TAMPERTRIGGER_RISINGEDGE) || \
+#define IS_RTC_TAMPER_TRIGGER(TRIGGER) (((TRIGGER) == RTC_TAMPERTRIGGER_RISINGEDGE) || \
                                         ((TRIGGER) == RTC_TAMPERTRIGGER_FALLINGEDGE)) 
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 /**
   * @}
   */  
 
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
 /** @defgroup RTCEx_Tamper_Filter_Definitions Tamper Filter Definitions 
   * @{
   */ 
-#define RTC_TAMPERFILTER_DISABLE   ((uint32_t)0x00000000)  /*!< Tamper filter is disabled */
+#define RTC_TAMPERFILTER_DISABLE   (0x00000000U)  /*!< Tamper filter is disabled */
 
-#define RTC_TAMPERFILTER_2SAMPLE   ((uint32_t)0x00000800)  /*!< Tamper is activated after 2 
+#define RTC_TAMPERFILTER_2SAMPLE   (0x00000800U)  /*!< Tamper is activated after 2 
                                                                 consecutive samples at the active level */
-#define RTC_TAMPERFILTER_4SAMPLE   ((uint32_t)0x00001000)  /*!< Tamper is activated after 4 
+#define RTC_TAMPERFILTER_4SAMPLE   (0x00001000U)  /*!< Tamper is activated after 4 
                                                                 consecutive samples at the active level */
-#define RTC_TAMPERFILTER_8SAMPLE   ((uint32_t)0x00001800)  /*!< Tamper is activated after 8 
+#define RTC_TAMPERFILTER_8SAMPLE   (0x00001800U)  /*!< Tamper is activated after 8 
                                                                 consecutive samples at the active level. */
 
-#define IS_TAMPER_FILTER(FILTER)  (((FILTER) == RTC_TAMPERFILTER_DISABLE) || \
+#define IS_RTC_TAMPER_FILTER(FILTER)  (((FILTER) == RTC_TAMPERFILTER_DISABLE) || \
                                    ((FILTER) == RTC_TAMPERFILTER_2SAMPLE) || \
                                    ((FILTER) == RTC_TAMPERFILTER_4SAMPLE) || \
                                    ((FILTER) == RTC_TAMPERFILTER_8SAMPLE))
@@ -378,24 +385,24 @@ typedef struct
 /** @defgroup RTCEx_Tamper_Sampling_Frequencies_Definitions Tamper Sampling Frequencies 
   * @{
   */ 
-#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV32768  ((uint32_t)0x00000000)  /*!< Each of the tamper inputs are sampled
+#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV32768  (0x00000000U)  /*!< Each of the tamper inputs are sampled
                                                                              with a frequency =  RTCCLK / 32768 */
-#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV16384  ((uint32_t)0x00000100)  /*!< Each of the tamper inputs are sampled
+#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV16384  (0x00000100U)  /*!< Each of the tamper inputs are sampled
                                                                              with a frequency =  RTCCLK / 16384 */
-#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV8192   ((uint32_t)0x00000200)  /*!< Each of the tamper inputs are sampled
+#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV8192   (0x00000200U)  /*!< Each of the tamper inputs are sampled
                                                                              with a frequency =  RTCCLK / 8192  */
-#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV4096   ((uint32_t)0x00000300)  /*!< Each of the tamper inputs are sampled
+#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV4096   (0x00000300U)  /*!< Each of the tamper inputs are sampled
                                                                              with a frequency =  RTCCLK / 4096  */
-#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV2048   ((uint32_t)0x00000400)  /*!< Each of the tamper inputs are sampled
+#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV2048   (0x00000400U)  /*!< Each of the tamper inputs are sampled
                                                                              with a frequency =  RTCCLK / 2048  */
-#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV1024   ((uint32_t)0x00000500)  /*!< Each of the tamper inputs are sampled
+#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV1024   (0x00000500U)  /*!< Each of the tamper inputs are sampled
                                                                              with a frequency =  RTCCLK / 1024  */
-#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV512    ((uint32_t)0x00000600)  /*!< Each of the tamper inputs are sampled
+#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV512    (0x00000600U)  /*!< Each of the tamper inputs are sampled
                                                                              with a frequency =  RTCCLK / 512   */
-#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV256    ((uint32_t)0x00000700)  /*!< Each of the tamper inputs are sampled
+#define RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV256    (0x00000700U)  /*!< Each of the tamper inputs are sampled
                                                                              with a frequency =  RTCCLK / 256   */
 
-#define IS_TAMPER_SAMPLING_FREQ(FREQ) (((FREQ) == RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV32768)|| \
+#define IS_RTC_TAMPER_SAMPLING_FREQ(FREQ) (((FREQ) == RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV32768)|| \
                                        ((FREQ) == RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV16384)|| \
                                        ((FREQ) == RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV8192) || \
                                        ((FREQ) == RTC_TAMPERSAMPLINGFREQ_RTCCLK_DIV4096) || \
@@ -410,16 +417,16 @@ typedef struct
 /** @defgroup RTCEx_Tamper_Pin_Precharge_Duration_Definitions Tamper Pin Precharge Duration
   * @{
   */
-#define RTC_TAMPERPRECHARGEDURATION_1RTCCLK ((uint32_t)0x00000000)  /*!< Tamper pins are pre-charged before
+#define RTC_TAMPERPRECHARGEDURATION_1RTCCLK (0x00000000U)  /*!< Tamper pins are pre-charged before
                                                                          sampling during 1 RTCCLK cycle */
-#define RTC_TAMPERPRECHARGEDURATION_2RTCCLK ((uint32_t)0x00002000)  /*!< Tamper pins are pre-charged before
+#define RTC_TAMPERPRECHARGEDURATION_2RTCCLK (0x00002000U)  /*!< Tamper pins are pre-charged before
                                                                          sampling during 2 RTCCLK cycles */
-#define RTC_TAMPERPRECHARGEDURATION_4RTCCLK ((uint32_t)0x00004000)  /*!< Tamper pins are pre-charged before
+#define RTC_TAMPERPRECHARGEDURATION_4RTCCLK (0x00004000U)  /*!< Tamper pins are pre-charged before
                                                                          sampling during 4 RTCCLK cycles */
-#define RTC_TAMPERPRECHARGEDURATION_8RTCCLK ((uint32_t)0x00006000)  /*!< Tamper pins are pre-charged before
+#define RTC_TAMPERPRECHARGEDURATION_8RTCCLK (0x00006000U)  /*!< Tamper pins are pre-charged before
                                                                          sampling during 8 RTCCLK cycles */
 
-#define IS_TAMPER_PRECHARGE_DURATION(DURATION) (((DURATION) == RTC_TAMPERPRECHARGEDURATION_1RTCCLK) || \
+#define IS_RTC_TAMPER_PRECHARGE_DURATION(DURATION) (((DURATION) == RTC_TAMPERPRECHARGEDURATION_1RTCCLK) || \
                                                 ((DURATION) == RTC_TAMPERPRECHARGEDURATION_2RTCCLK) || \
                                                 ((DURATION) == RTC_TAMPERPRECHARGEDURATION_4RTCCLK) || \
                                                 ((DURATION) == RTC_TAMPERPRECHARGEDURATION_8RTCCLK))
@@ -431,9 +438,9 @@ typedef struct
   * @{
   */
 #define RTC_TIMESTAMPONTAMPERDETECTION_ENABLE  ((uint32_t)RTC_TAFCR_TAMPTS)  /*!< TimeStamp on Tamper Detection event saved */
-#define RTC_TIMESTAMPONTAMPERDETECTION_DISABLE ((uint32_t)0x00000000)        /*!< TimeStamp on Tamper Detection event is not saved */
+#define RTC_TIMESTAMPONTAMPERDETECTION_DISABLE (0x00000000U)        /*!< TimeStamp on Tamper Detection event is not saved */
 
-#define IS_TAMPER_TIMESTAMPONTAMPER_DETECTION(DETECTION) (((DETECTION) == RTC_TIMESTAMPONTAMPERDETECTION_ENABLE) || \
+#define IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(DETECTION) (((DETECTION) == RTC_TIMESTAMPONTAMPERDETECTION_ENABLE) || \
                                                           ((DETECTION) == RTC_TIMESTAMPONTAMPERDETECTION_DISABLE))
 /**
   * @}
@@ -442,34 +449,34 @@ typedef struct
 /** @defgroup RTCEx_Tamper_Pull_Up_Definitions Tamper Pull-Up Definitions
   * @{
   */
-#define RTC_TAMPER_PULLUP_ENABLE  ((uint32_t)0x00000000)            /*!< TimeStamp on Tamper Detection event saved */
-#define RTC_TAMPER_PULLUP_DISABLE ((uint32_t)RTC_TAFCR_TAMPPUDIS)   /*!< TimeStamp on Tamper Detection event is not saved */
+#define RTC_TAMPER_PULLUP_ENABLE  (0x00000000U)            /*!< TimeStamp on Tamper Detection event saved */
+#define RTC_TAMPER_PULLUP_DISABLE (RTC_TAFCR_TAMPPUDIS)   /*!< TimeStamp on Tamper Detection event is not saved */
 
-#define IS_TAMPER_PULLUP_STATE(STATE) (((STATE) == RTC_TAMPER_PULLUP_ENABLE) || \
+#define IS_RTC_TAMPER_PULLUP_STATE(STATE) (((STATE) == RTC_TAMPER_PULLUP_ENABLE) || \
                                        ((STATE) == RTC_TAMPER_PULLUP_DISABLE))
 /**
   * @}
   */
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 
 /** @defgroup RTCEx_Wakeup_Timer_Definitions Wakeup Timer Definitions
   * @{
   */
-#define RTC_WAKEUPCLOCK_RTCCLK_DIV16        ((uint32_t)0x00000000)
-#define RTC_WAKEUPCLOCK_RTCCLK_DIV8         ((uint32_t)0x00000001)
-#define RTC_WAKEUPCLOCK_RTCCLK_DIV4         ((uint32_t)0x00000002)
-#define RTC_WAKEUPCLOCK_RTCCLK_DIV2         ((uint32_t)0x00000003)
-#define RTC_WAKEUPCLOCK_CK_SPRE_16BITS      ((uint32_t)0x00000004)
-#define RTC_WAKEUPCLOCK_CK_SPRE_17BITS      ((uint32_t)0x00000006)
+#define RTC_WAKEUPCLOCK_RTCCLK_DIV16        (0x00000000U)
+#define RTC_WAKEUPCLOCK_RTCCLK_DIV8         (0x00000001U)
+#define RTC_WAKEUPCLOCK_RTCCLK_DIV4         (0x00000002U)
+#define RTC_WAKEUPCLOCK_RTCCLK_DIV2         (0x00000003U)
+#define RTC_WAKEUPCLOCK_CK_SPRE_16BITS      (0x00000004U)
+#define RTC_WAKEUPCLOCK_CK_SPRE_17BITS      (0x00000006U)
 
-#define IS_WAKEUP_CLOCK(CLOCK) (((CLOCK) == RTC_WAKEUPCLOCK_RTCCLK_DIV16)   || \
+#define IS_RTC_WAKEUP_CLOCK(CLOCK) (((CLOCK) == RTC_WAKEUPCLOCK_RTCCLK_DIV16)   || \
                                 ((CLOCK) == RTC_WAKEUPCLOCK_RTCCLK_DIV8)    || \
                                 ((CLOCK) == RTC_WAKEUPCLOCK_RTCCLK_DIV4)    || \
                                 ((CLOCK) == RTC_WAKEUPCLOCK_RTCCLK_DIV2)    || \
                                 ((CLOCK) == RTC_WAKEUPCLOCK_CK_SPRE_16BITS) || \
                                 ((CLOCK) == RTC_WAKEUPCLOCK_CK_SPRE_17BITS))
 
-#define IS_WAKEUP_COUNTER(COUNTER)  ((COUNTER) <= 0xFFFF)
+#define IS_RTC_WAKEUP_COUNTER(COUNTER)  ((COUNTER) <= 0xFFFF)
 /**
   * @}
   */
@@ -477,8 +484,8 @@ typedef struct
 /** @defgroup RTCEx_Digital_Calibration_Definitions Digital Calibration Definitions 
   * @{
   */ 
-#define RTC_CALIBSIGN_POSITIVE            ((uint32_t)0x00000000) 
-#define RTC_CALIBSIGN_NEGATIVE            ((uint32_t)0x00000080)
+#define RTC_CALIBSIGN_POSITIVE            (0x00000000U) 
+#define RTC_CALIBSIGN_NEGATIVE            (0x00000080U)
 
 #define IS_RTC_CALIB_SIGN(SIGN) (((SIGN) == RTC_CALIBSIGN_POSITIVE) || \
                                  ((SIGN) == RTC_CALIBSIGN_NEGATIVE))
@@ -491,11 +498,11 @@ typedef struct
 /** @defgroup RTCEx_Smooth_Calib_Period_Definitions Smooth Calib Period Definitions
   * @{
   */
-#define RTC_SMOOTHCALIB_PERIOD_32SEC   ((uint32_t)0x00000000) /*!<  If RTCCLK = 32768 Hz, Smooth calibation
+#define RTC_SMOOTHCALIB_PERIOD_32SEC   (0x00000000U) /*!<  If RTCCLK = 32768 Hz, Smooth calibation
                                                                     period is 32s,  else 2exp20 RTCCLK seconds */
-#define RTC_SMOOTHCALIB_PERIOD_16SEC   ((uint32_t)0x00002000) /*!<  If RTCCLK = 32768 Hz, Smooth calibation
+#define RTC_SMOOTHCALIB_PERIOD_16SEC   (0x00002000U) /*!<  If RTCCLK = 32768 Hz, Smooth calibation
                                                                     period is 16s, else 2exp19 RTCCLK seconds */
-#define RTC_SMOOTHCALIB_PERIOD_8SEC    ((uint32_t)0x00004000) /*!<  If RTCCLK = 32768 Hz, Smooth calibation
+#define RTC_SMOOTHCALIB_PERIOD_8SEC    (0x00004000U) /*!<  If RTCCLK = 32768 Hz, Smooth calibation
                                                                     period is 8s, else 2exp18 RTCCLK seconds */
 
 #define IS_RTC_SMOOTH_CALIB_PERIOD(PERIOD) (((PERIOD) == RTC_SMOOTHCALIB_PERIOD_32SEC) || \
@@ -508,10 +515,10 @@ typedef struct
 /** @defgroup RTCEx_Smooth_Calib_Plus_Pulses_Definitions Smooth Calib Plus Pulses Definitions
   * @{
   */
-#define RTC_SMOOTHCALIB_PLUSPULSES_SET    ((uint32_t)0x00008000) /*!<  The number of RTCCLK pulses added
+#define RTC_SMOOTHCALIB_PLUSPULSES_SET    (0x00008000U) /*!<  The number of RTCCLK pulses added
                                                                        during a X -second window = Y - CALM[8:0]
                                                                        with Y = 512, 256, 128 when X = 32, 16, 8 */
-#define RTC_SMOOTHCALIB_PLUSPULSES_RESET  ((uint32_t)0x00000000) /*!<  The number of RTCCLK pulses subbstited
+#define RTC_SMOOTHCALIB_PLUSPULSES_RESET  (0x00000000U) /*!<  The number of RTCCLK pulses subbstited
                                                                        during a 32-second window =   CALM[8:0] */
 
 #define IS_RTC_SMOOTH_CALIB_PLUS(PLUS) (((PLUS) == RTC_SMOOTHCALIB_PLUSPULSES_SET) || \
@@ -523,7 +530,7 @@ typedef struct
 /** @defgroup RTCEx_Smooth_Calib_Minus_Pulses_Definitions Smooth Calib Minus Pulses Definitions
   * @{
   */
-#define  IS_RTC_SMOOTH_CALIB_MINUS(VALUE) ((VALUE) <= 0x000001FF)
+#define  IS_RTC_SMOOTH_CALIB_MINUS(VALUE) ((VALUE) <= 0x000001FFU)
 /**
   * @}
   */
@@ -531,8 +538,8 @@ typedef struct
 /** @defgroup RTCEx_Add_1_Second_Parameter_Definitions Add 1 Second Parameter Definitions
   * @{
   */ 
-#define RTC_SHIFTADD1S_RESET      ((uint32_t)0x00000000)
-#define RTC_SHIFTADD1S_SET        ((uint32_t)0x80000000)
+#define RTC_SHIFTADD1S_RESET      (0x00000000U)
+#define RTC_SHIFTADD1S_SET        (0x80000000U)
 
 #define IS_RTC_SHIFT_ADD1S(SEL) (((SEL) == RTC_SHIFTADD1S_RESET) || \
                                  ((SEL) == RTC_SHIFTADD1S_SET))
@@ -543,7 +550,7 @@ typedef struct
 /** @defgroup RTCEx_Substract_Fraction_Of_Second_Value Substract Fraction Of Second Value
   * @{
   */ 
-#define IS_RTC_SHIFT_SUBFS(FS) ((FS) <= 0x00007FFF)
+#define IS_RTC_SHIFT_SUBFS(FS) ((FS) <= 0x00007FFFU)
 /**
   * @}
   */
@@ -551,8 +558,8 @@ typedef struct
 /** @defgroup RTCEx_Calib_Output_Selection_Definitions Calib Output Selection Definitions 
   * @{
   */ 
-#define RTC_CALIBOUTPUT_512HZ            ((uint32_t)0x00000000) 
-#define RTC_CALIBOUTPUT_1HZ              ((uint32_t)0x00080000)
+#define RTC_CALIBOUTPUT_512HZ            (0x00000000U) 
+#define RTC_CALIBOUTPUT_1HZ              (0x00080000U)
 
 #define IS_RTC_CALIB_OUTPUT(OUTPUT)  (((OUTPUT) == RTC_CALIBOUTPUT_512HZ) || \
                                       ((OUTPUT) == RTC_CALIBOUTPUT_1HZ))
@@ -560,11 +567,11 @@ typedef struct
   * @}
   */ 
 
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE) 
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX) 
 /** @defgroup RTC_Alarm_Sub_Seconds_Value Alarm Sub Seconds Value
   * @{
   */ 
-#define IS_RTC_ALARM_SUB_SECOND_VALUE(VALUE) ((VALUE) <= (uint32_t)0x00007FFF)
+#define IS_RTC_ALARM_SUB_SECOND_VALUE(VALUE) ((VALUE) <= 0x00007FFFU)
 /**
   * @}
   */
@@ -572,38 +579,38 @@ typedef struct
 /** @defgroup RTC_Alarm_Sub_Seconds_Masks_Definitions Alarm Sub Seconds Masks Definitions
   * @{
   */ 
-#define RTC_ALARMSUBSECONDMASK_ALL         ((uint32_t)0x00000000)  /*!< All Alarm SS fields are masked. 
+#define RTC_ALARMSUBSECONDMASK_ALL         (0x00000000U)  /*!< All Alarm SS fields are masked. 
                                                                         There is no comparison on sub seconds 
                                                                         for Alarm */
-#define RTC_ALARMSUBSECONDMASK_SS14_1      ((uint32_t)0x01000000)  /*!< SS[14:1] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_1      (0x01000000U)  /*!< SS[14:1] are don't care in Alarm 
                                                                         comparison. Only SS[0] is compared.    */
-#define RTC_ALARMSUBSECONDMASK_SS14_2      ((uint32_t)0x02000000)  /*!< SS[14:2] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_2      (0x02000000U)  /*!< SS[14:2] are don't care in Alarm 
                                                                         comparison. Only SS[1:0] are compared  */
-#define RTC_ALARMSUBSECONDMASK_SS14_3      ((uint32_t)0x03000000)  /*!< SS[14:3] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_3      (0x03000000U)  /*!< SS[14:3] are don't care in Alarm 
                                                                         comparison. Only SS[2:0] are compared  */
-#define RTC_ALARMSUBSECONDMASK_SS14_4      ((uint32_t)0x04000000)  /*!< SS[14:4] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_4      (0x04000000U)  /*!< SS[14:4] are don't care in Alarm 
                                                                         comparison. Only SS[3:0] are compared  */
-#define RTC_ALARMSUBSECONDMASK_SS14_5      ((uint32_t)0x05000000)  /*!< SS[14:5] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_5      (0x05000000U)  /*!< SS[14:5] are don't care in Alarm 
                                                                         comparison. Only SS[4:0] are compared  */
-#define RTC_ALARMSUBSECONDMASK_SS14_6      ((uint32_t)0x06000000)  /*!< SS[14:6] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_6      (0x06000000U)  /*!< SS[14:6] are don't care in Alarm 
                                                                         comparison. Only SS[5:0] are compared  */
-#define RTC_ALARMSUBSECONDMASK_SS14_7      ((uint32_t)0x07000000)  /*!< SS[14:7] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_7      (0x07000000U)  /*!< SS[14:7] are don't care in Alarm 
                                                                         comparison. Only SS[6:0] are compared  */
-#define RTC_ALARMSUBSECONDMASK_SS14_8      ((uint32_t)0x08000000)  /*!< SS[14:8] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_8      (0x08000000U)  /*!< SS[14:8] are don't care in Alarm 
                                                                         comparison. Only SS[7:0] are compared  */
-#define RTC_ALARMSUBSECONDMASK_SS14_9      ((uint32_t)0x09000000)  /*!< SS[14:9] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_9      (0x09000000U)  /*!< SS[14:9] are don't care in Alarm 
                                                                         comparison. Only SS[8:0] are compared  */
-#define RTC_ALARMSUBSECONDMASK_SS14_10     ((uint32_t)0x0A000000)  /*!< SS[14:10] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_10     (0x0A000000U)  /*!< SS[14:10] are don't care in Alarm 
                                                                         comparison. Only SS[9:0] are compared  */
-#define RTC_ALARMSUBSECONDMASK_SS14_11     ((uint32_t)0x0B000000)  /*!< SS[14:11] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_11     (0x0B000000U)  /*!< SS[14:11] are don't care in Alarm 
                                                                         comparison. Only SS[10:0] are compared */
-#define RTC_ALARMSUBSECONDMASK_SS14_12     ((uint32_t)0x0C000000)  /*!< SS[14:12] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_12     (0x0C000000U)  /*!< SS[14:12] are don't care in Alarm 
                                                                         comparison.Only SS[11:0] are compared  */
-#define RTC_ALARMSUBSECONDMASK_SS14_13     ((uint32_t)0x0D000000)  /*!< SS[14:13] are don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14_13     (0x0D000000U)  /*!< SS[14:13] are don't care in Alarm 
                                                                         comparison. Only SS[12:0] are compared */
-#define RTC_ALARMSUBSECONDMASK_SS14        ((uint32_t)0x0E000000)  /*!< SS[14] is don't care in Alarm 
+#define RTC_ALARMSUBSECONDMASK_SS14        (0x0E000000U)  /*!< SS[14] is don't care in Alarm 
                                                                         comparison.Only SS[13:0] are compared  */
-#define RTC_ALARMSUBSECONDMASK_NONE        ((uint32_t)0x0F000000)  /*!< SS[14:0] are compared and must match 
+#define RTC_ALARMSUBSECONDMASK_NONE        (0x0F000000U)  /*!< SS[14:0] are compared and must match 
                                                                         to activate alarm. */
 
 #define IS_RTC_ALARM_SUB_SECOND_MASK(MASK)   (((MASK) == RTC_ALARMSUBSECONDMASK_ALL) || \
@@ -625,7 +632,7 @@ typedef struct
 /**
   * @}
   */   
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 
 /**
   * @}
@@ -746,28 +753,126 @@ typedef struct
   */
 #define __HAL_RTC_WAKEUPTIMER_DISABLE_IT(__HANDLE__, __INTERRUPT__)   ((__HANDLE__)->Instance->CR &= ~(__INTERRUPT__))
 
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)
+/**
+  * @brief  Enable the RTC Tamper1 input detection.
+  * @param  __HANDLE__: specifies the RTC handle.
+  * @retval None
+  */
+#define __HAL_RTC_TAMPER1_ENABLE(__HANDLE__)                         SET_BIT((__HANDLE__)->Instance->TAFCR, RTC_TAFCR_TAMP1E)
+
+/**
+  * @brief  Disable the RTC Tamper1 input detection.
+  * @param  __HANDLE__: specifies the RTC handle.
+  * @retval None
+  */
+#define __HAL_RTC_TAMPER1_DISABLE(__HANDLE__)                        CLEAR_BIT((__HANDLE__)->Instance->TAFCR, RTC_TAFCR_TAMP1E)
+
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC)\
+  || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA)\
+  || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA)\
+  || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)
+/**
+  * @brief  Enable the RTC Tamper2 input detection.
+  * @param  __HANDLE__: specifies the RTC handle.
+  * @retval None
+  */
+#define __HAL_RTC_TAMPER2_ENABLE(__HANDLE__)                         SET_BIT((__HANDLE__)->Instance->TAFCR, RTC_TAFCR_TAMP2E)
+
+/**
+  * @brief  Disable the RTC Tamper2 input detection.
+  * @param  __HANDLE__: specifies the RTC handle.
+  * @retval None
+  */
+#define __HAL_RTC_TAMPER2_DISABLE(__HANDLE__)                        CLEAR_BIT((__HANDLE__)->Instance->TAFCR, RTC_TAFCR_TAMP2E)
+
+/**
+  * @brief  Enable the RTC Tamper3 input detection.
+  * @param  __HANDLE__: specifies the RTC handle.
+  * @retval None
+  */
+#define __HAL_RTC_TAMPER3_ENABLE(__HANDLE__)                         SET_BIT((__HANDLE__)->Instance->TAFCR, RTC_TAFCR_TAMP3E)
+
+/**
+  * @brief  Disable the RTC Tamper3 input detection.
+  * @param  __HANDLE__: specifies the RTC handle.
+  * @retval None
+  */
+#define __HAL_RTC_TAMPER3_DISABLE(__HANDLE__)                        CLEAR_BIT((__HANDLE__)->Instance->TAFCR, RTC_TAFCR_TAMP3E)
+
+
 /**
   * @brief  Check whether the specified RTC Tamper interrupt has occurred or not.
   * @param  __HANDLE__: specifies the RTC handle.
-  * @param  __FLAG__: specifies the RTC Tamper interrupt sources to be enabled or disabled.
+  * @param  __INTERRUPT__: specifies the RTC Tamper interrupt to check.
   *         This parameter can be:
-  *            @arg  RTC_IT_TAMP1
-  *            @arg  RTC_IT_TAMP2
-  *            @arg  RTC_IT_TAMP3
+  *            @arg  RTC_IT_TAMP1: Tamper1 interrupt
+  *            @arg  RTC_IT_TAMP2: Tamper2 interrupt
+  *            @arg  RTC_IT_TAMP3: Tamper3 interrupt
   * @retval None
   */
+#define __HAL_RTC_TAMPER_GET_IT(__HANDLE__, __INTERRUPT__) (((__INTERRUPT__) == RTC_IT_TAMP1) ? (((((__HANDLE__)->Instance->ISR) & RTC_ISR_TAMP1F) != RESET) ? SET : RESET) : \
+                                                           ((__INTERRUPT__) == RTC_IT_TAMP2) ? (((((__HANDLE__)->Instance->ISR) & RTC_ISR_TAMP2F) != RESET) ? SET : RESET) : \
+                                                           (((((__HANDLE__)->Instance->ISR) & RTC_ISR_TAMP3F) != RESET) ? SET : RESET))
 #else
 /**
   * @brief  Check whether the specified RTC Tamper interrupt has occurred or not.
   * @param  __HANDLE__: specifies the RTC handle.
-  * @param  __FLAG__: specifies the RTC Tamper interrupt sources to be enabled or disabled.
+  * @param  __INTERRUPT__: specifies the RTC Tamper interrupt to check.
   *         This parameter can be:
-  *            @arg  RTC_IT_TAMP1
+  *            @arg  RTC_IT_TAMP1: Tamper1 interrupt
   * @retval None
   */
+#define __HAL_RTC_TAMPER_GET_IT(__HANDLE__, __INTERRUPT__) (((((__HANDLE__)->Instance->ISR) & RTC_ISR_TAMP1F) != RESET) ? SET : RESET)
+
 #endif
-#define __HAL_RTC_TAMPER_GET_IT(__HANDLE__, __FLAG__)                 (((((__HANDLE__)->Instance->ISR) & ((__FLAG__)>> 4)) != RESET)? SET : RESET)
+
+/**
+  * @brief  Enable the RTC Tamper interrupt.
+  * @param  __HANDLE__: specifies the RTC handle.
+  * @param  __INTERRUPT__: specifies the RTC Tamper interrupt sources to be enabled
+  *          This parameter can be any combination of the following values:
+  *            @arg  RTC_IT_TAMP1: Tamper1 interrupt
+  *            @arg  RTC_IT_TAMP2: Tamper2 interrupt (*)
+  *            @arg  RTC_IT_TAMP3: Tamper3 interrupt (*)
+  * @note   (*) Available only on devices STM32L100xBA, STM32L151xBA, STM32L152xBA, STM32L100xC, 
+  *         STM32L151xC, STM32L152xC, STM32L162xC, STM32L151xCA, STM32L151xD, STM32L152xCA, 
+  *         STM32L152xD, STM32L162xCA, STM32L162xD, STM32L151xE, STM32L152xE, STM32L162xE
+  *         STM32L151xDX, STM32L152xDX, STM32L162xDX
+  * @retval None
+  */   
+#define __HAL_RTC_TAMPER_ENABLE_IT(__HANDLE__, __INTERRUPT__)         SET_BIT(((__HANDLE__)->Instance->TAFCR), RTC_TAFCR_TAMPIE)
+
+/**
+  * @brief  Disable the RTC Tamper interrupt.
+  * @param  __HANDLE__: specifies the RTC handle.
+  * @param  __INTERRUPT__: specifies the RTC Tamper interrupt sources to be disabled. 
+  *         This parameter can be any combination of the following values:
+  *            @arg  RTC_IT_TAMP1: Tamper1 interrupt
+  *            @arg  RTC_IT_TAMP2: Tamper2 interrupt (*)
+  *            @arg  RTC_IT_TAMP3: Tamper3 interrupt (*)
+  * @note   (*) Available only on devices STM32L100xBA, STM32L151xBA, STM32L152xBA, STM32L100xC, 
+  *         STM32L151xC, STM32L152xC, STM32L162xC, STM32L151xCA, STM32L151xD, STM32L152xCA, 
+  *         STM32L152xD, STM32L162xCA, STM32L162xD, STM32L151xE, STM32L152xE, STM32L162xE
+  *         STM32L151xDX, STM32L152xDX, STM32L162xDX
+  * @retval None
+  */
+#define __HAL_RTC_TAMPER_DISABLE_IT(__HANDLE__, __INTERRUPT__)        CLEAR_BIT(((__HANDLE__)->Instance->TAFCR), RTC_TAFCR_TAMPIE)
+
+/**
+  * @brief  Check whether the specified RTC Tamper interrupt has been enabled or not.
+  * @param  __HANDLE__: specifies the RTC handle.
+  * @param  __INTERRUPT__: specifies the RTC Tamper interrupt source to check.
+  *         This parameter can be:
+  *            @arg  RTC_IT_TAMP1: Tamper1 interrupt
+  *            @arg  RTC_IT_TAMP2: Tamper2 interrupt (*)
+  *            @arg  RTC_IT_TAMP3: Tamper3 interrupt (*)
+  * @note   (*) Available only on devices STM32L100xBA, STM32L151xBA, STM32L152xBA, STM32L100xC, 
+  *         STM32L151xC, STM32L152xC, STM32L162xC, STM32L151xCA, STM32L151xD, STM32L152xCA, 
+  *         STM32L152xD, STM32L162xCA, STM32L162xD, STM32L151xE, STM32L152xE, STM32L162xE
+  *         STM32L151xDX, STM32L152xDX, STM32L162xDX
+  * @retval None
+  */
+#define __HAL_RTC_TAMPER_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)    (((((__HANDLE__)->Instance->TAFCR) & RTC_TAFCR_TAMPIE) != RESET) ? SET : RESET)
 
 /**
   * @brief  Check whether the specified RTC WakeUpTimer interrupt has occurred or not.
@@ -780,14 +885,34 @@ typedef struct
 #define __HAL_RTC_WAKEUPTIMER_GET_IT(__HANDLE__, __FLAG__)            (((((__HANDLE__)->Instance->ISR) & ((__FLAG__)>> 4)) != RESET)? SET : RESET)
 
 /**
+  * @brief  Check whether the specified RTC Wake Up timer interrupt has been enabled or not.
+  * @param  __HANDLE__: specifies the RTC handle.
+  * @param  __INTERRUPT__: specifies the RTC Wake Up timer interrupt sources to check.
+  *         This parameter can be:
+  *            @arg RTC_IT_WUT:  WakeUpTimer interrupt
+  * @retval None
+  */
+#define __HAL_RTC_WAKEUPTIMER_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)   (((((__HANDLE__)->Instance->CR) & (__INTERRUPT__)) != RESET) ? SET : RESET)
+
+/**
   * @brief  Check whether the specified RTC TimeStamp interrupt has occurred or not.
   * @param  __HANDLE__: specifies the RTC handle.
-  * @param  __FLAG__: specifies the RTC TimeStamp interrupt sources to be enabled or disabled.
+  * @param  __INTERRUPT__: specifies the RTC TimeStamp interrupt sources to be enabled or disabled.
   *         This parameter can be:
   *            @arg RTC_IT_TS: TimeStamp interrupt
   * @retval None
   */
-#define __HAL_RTC_TIMESTAMP_GET_IT(__HANDLE__, __FLAG__)              (((((__HANDLE__)->Instance->ISR) & ((__FLAG__)>> 4)) != RESET)? SET : RESET)
+#define __HAL_RTC_TIMESTAMP_GET_IT(__HANDLE__, __INTERRUPT__)              (((((__HANDLE__)->Instance->ISR) & ((__INTERRUPT__)>> 4)) != RESET)? SET : RESET)
+
+/**
+  * @brief  Check whether the specified RTC Time Stamp interrupt has been enabled or not.
+  * @param  __HANDLE__: specifies the RTC handle.
+  * @param  __INTERRUPT__: specifies the RTC Time Stamp interrupt source to check.
+  *         This parameter can be:
+  *            @arg RTC_IT_TS: TimeStamp interrupt
+  * @retval None
+  */
+#define __HAL_RTC_TIMESTAMP_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)     (((((__HANDLE__)->Instance->CR) & (__INTERRUPT__)) != RESET) ? SET : RESET)
 
 /**
   * @brief  Get the selected RTC TimeStamp's flag status.
@@ -817,11 +942,20 @@ typedef struct
   * @param  __FLAG__: specifies the RTC Tamper Flag sources to be enabled or disabled.
   *         This parameter can be:
   *            @arg RTC_FLAG_TAMP1F      
+  *            @arg RTC_FLAG_TAMP2F  (*)     
+  *            @arg RTC_FLAG_TAMP3F  (*)     
+  * @note   (*) Available only on devices STM32L100xBA, STM32L151xBA, STM32L152xBA, STM32L100xC, 
+  *         STM32L151xC, STM32L152xC, STM32L162xC, STM32L151xCA, STM32L151xD, STM32L152xCA, 
+  *         STM32L152xD, STM32L162xCA, STM32L162xD, STM32L151xE, STM32L152xE, STM32L162xE
+  *         STM32L151xDX, STM32L152xDX, STM32L162xDX
   * @retval None
   */
 #define __HAL_RTC_TAMPER_GET_FLAG(__HANDLE__, __FLAG__)               (((((__HANDLE__)->Instance->ISR) & (__FLAG__)) != RESET)? SET : RESET)
 
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC)\
+  || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA)\
+  || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA)\
+  || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)
 /**
   * @brief  Get the selected RTC shift operation's flag status.
   * @param  __HANDLE__: specifies the RTC handle.
@@ -831,7 +965,7 @@ typedef struct
   * @retval None
   */
 #define __HAL_RTC_SHIFT_GET_FLAG(__HANDLE__, __FLAG__)                (((((__HANDLE__)->Instance->ISR) & (__FLAG__)) != RESET)? SET : RESET)
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 
 /**
   * @brief  Clear the RTC Time Stamp's pending flags.
@@ -841,7 +975,7 @@ typedef struct
   *            @arg RTC_FLAG_TSF  
   * @retval None
   */
-#define __HAL_RTC_TIMESTAMP_CLEAR_FLAG(__HANDLE__, __FLAG__)              ((__HANDLE__)->Instance->ISR) = (~(((__FLAG__) | RTC_ISR_INIT)& 0x0000FFFF)|((__HANDLE__)->Instance->ISR & RTC_ISR_INIT))
+#define __HAL_RTC_TIMESTAMP_CLEAR_FLAG(__HANDLE__, __FLAG__)          ((__HANDLE__)->Instance->ISR) = (~((__FLAG__) | RTC_ISR_INIT)|((__HANDLE__)->Instance->ISR & RTC_ISR_INIT))
 
 /**
   * @brief  Clear the RTC Tamper's pending flags.
@@ -849,19 +983,183 @@ typedef struct
   * @param  __FLAG__: specifies the RTC Tamper Flag sources to be enabled or disabled.
   *         This parameter can be:
   *            @arg RTC_FLAG_TAMP1F  
+  *            @arg RTC_FLAG_TAMP2F  (*)     
+  *            @arg RTC_FLAG_TAMP3F  (*)     
+  * @note   (*) Available only on devices STM32L100xBA, STM32L151xBA, STM32L152xBA, STM32L100xC, 
+  *         STM32L151xC, STM32L152xC, STM32L162xC, STM32L151xCA, STM32L151xD, STM32L152xCA, 
+  *         STM32L152xD, STM32L162xCA, STM32L162xD, STM32L151xE, STM32L152xE, STM32L162xE
+  *         STM32L151xDX, STM32L152xDX, STM32L162xDX
   * @retval None
   */
-#define __HAL_RTC_TAMPER_CLEAR_FLAG(__HANDLE__, __FLAG__)                 ((__HANDLE__)->Instance->ISR) = (~(((__FLAG__) | RTC_ISR_INIT)& 0x0000FFFF)|((__HANDLE__)->Instance->ISR & RTC_ISR_INIT))
+#define __HAL_RTC_TAMPER_CLEAR_FLAG(__HANDLE__, __FLAG__)      ((__HANDLE__)->Instance->ISR) = (~((__FLAG__) | RTC_ISR_INIT)|((__HANDLE__)->Instance->ISR & RTC_ISR_INIT))
 
 /**
   * @brief  Clear the RTC Wake Up timer's pending flags.
   * @param  __HANDLE__: specifies the RTC handle.
-  * @param  __FLAG__: specifies the RTC Tamper Flag sources to be enabled or disabled.
+  * @param  __FLAG__: specifies the RTC WakeUpTimer Flag to clear.
   *         This parameter can be:
-  *            @arg RTC_FLAG_WUTF   
+  *            @arg RTC_FLAG_WUTF
   * @retval None
   */
-#define __HAL_RTC_WAKEUPTIMER_CLEAR_FLAG(__HANDLE__, __FLAG__)            ((__HANDLE__)->Instance->ISR) = (~(((__FLAG__) | RTC_ISR_INIT)& 0x0000FFFF)|((__HANDLE__)->Instance->ISR & RTC_ISR_INIT)) 
+#define __HAL_RTC_WAKEUPTIMER_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->ISR) = (~((__FLAG__) | RTC_ISR_INIT)|((__HANDLE__)->Instance->ISR & RTC_ISR_INIT)) 
+
+/**
+  * @brief  Enable interrupt on the RTC WakeUp Timer associated Exti line.
+  * @retval None
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_IT()       (EXTI->IMR |= RTC_EXTI_LINE_WAKEUPTIMER_EVENT)
+
+/**
+  * @brief  Disable interrupt on the RTC WakeUp Timer associated Exti line.
+  * @retval None
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_DISABLE_IT()      (EXTI->IMR &= ~(RTC_EXTI_LINE_WAKEUPTIMER_EVENT))
+
+/**
+  * @brief  Enable event on the RTC WakeUp Timer associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_EVENT()    (EXTI->EMR |= RTC_EXTI_LINE_WAKEUPTIMER_EVENT)
+
+/**
+  * @brief  Disable event on the RTC WakeUp Timer associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_DISABLE_EVENT()   (EXTI->EMR &= ~(RTC_EXTI_LINE_WAKEUPTIMER_EVENT))
+
+/**
+  * @brief  Enable falling edge trigger on the RTC WakeUp Timer associated Exti line. 
+  * @retval None.
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_FALLING_EDGE()   (EXTI->FTSR |= RTC_EXTI_LINE_WAKEUPTIMER_EVENT)
+
+/**
+  * @brief  Disable falling edge trigger on the RTC WakeUp Timer associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_DISABLE_FALLING_EDGE()  (EXTI->FTSR &= ~(RTC_EXTI_LINE_WAKEUPTIMER_EVENT))
+
+/**
+  * @brief  Enable rising edge trigger on the RTC WakeUp Timer associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_RISING_EDGE()    (EXTI->RTSR |= RTC_EXTI_LINE_WAKEUPTIMER_EVENT)
+
+/**
+  * @brief  Disable rising edge trigger on the RTC WakeUp Timer associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_DISABLE_RISING_EDGE()   (EXTI->RTSR &= ~(RTC_EXTI_LINE_WAKEUPTIMER_EVENT))
+
+/**
+  * @brief  Enable rising & falling edge trigger on the RTC WakeUp Timer associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_RISING_FALLING_EDGE() do { __HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_RISING_EDGE();__HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_FALLING_EDGE(); } while(0);
+
+/**
+  * @brief  Disable rising & falling edge trigger on the RTC WakeUp Timer associated Exti line.
+  * This parameter can be:
+  * @retval None.
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_DISABLE_RISING_FALLING_EDGE() do { __HAL_RTC_WAKEUPTIMER_EXTI_DISABLE_RISING_EDGE();__HAL_RTC_WAKEUPTIMER_EXTI_DISABLE_FALLING_EDGE(); } while(0);
+
+/**
+  * @brief Check whether the RTC WakeUp Timer associated Exti line interrupt flag is set or not.
+  * @retval Line Status.
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_GET_FLAG()              (EXTI->PR & RTC_EXTI_LINE_WAKEUPTIMER_EVENT)
+
+/**
+  * @brief Clear the RTC WakeUp Timer associated Exti line flag.
+  * @retval None.
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_CLEAR_FLAG()            (EXTI->PR = RTC_EXTI_LINE_WAKEUPTIMER_EVENT)
+
+/**
+  * @brief Generate a Software interrupt on the RTC WakeUp Timer associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_WAKEUPTIMER_EXTI_GENERATE_SWIT()         (EXTI->SWIER |= RTC_EXTI_LINE_WAKEUPTIMER_EVENT)
+
+/**
+  * @brief  Enable interrupt on the RTC Tamper and Timestamp associated Exti line.
+  * @retval None
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_IT()        (EXTI->IMR |= RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT)
+
+/**
+  * @brief  Disable interrupt on the RTC Tamper and Timestamp associated Exti line.
+  * @retval None
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_DISABLE_IT()       (EXTI->IMR &= ~(RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT))
+
+/**
+  * @brief  Enable event on the RTC Tamper and Timestamp associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_EVENT()    (EXTI->EMR |= RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT)
+
+/**
+  * @brief  Disable event on the RTC Tamper and Timestamp associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_DISABLE_EVENT()   (EXTI->EMR &= ~(RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT))
+
+/**
+  * @brief  Enable falling edge trigger on the RTC Tamper and Timestamp associated Exti line. 
+  * @retval None.
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_FALLING_EDGE()   (EXTI->FTSR |= RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT)
+
+/**
+  * @brief  Disable falling edge trigger on the RTC Tamper and Timestamp associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_DISABLE_FALLING_EDGE()  (EXTI->FTSR &= ~(RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT))
+
+/**
+  * @brief  Enable rising edge trigger on the RTC Tamper and Timestamp associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_RISING_EDGE()    (EXTI->RTSR |= RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT)
+
+/**
+  * @brief  Disable rising edge trigger on the RTC Tamper and Timestamp associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_DISABLE_RISING_EDGE()   (EXTI->RTSR &= ~(RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT))
+
+/**
+  * @brief  Enable rising & falling edge trigger on the RTC Tamper and Timestamp associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_RISING_FALLING_EDGE() do { __HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_RISING_EDGE();__HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_FALLING_EDGE(); } while(0);
+
+/**
+  * @brief  Disable rising & falling edge trigger on the RTC Tamper and Timestamp associated Exti line.
+  * This parameter can be:
+  * @retval None.
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_DISABLE_RISING_FALLING_EDGE() do { __HAL_RTC_TAMPER_TIMESTAMP_EXTI_DISABLE_RISING_EDGE();__HAL_RTC_TAMPER_TIMESTAMP_EXTI_DISABLE_FALLING_EDGE(); } while(0);
+
+/**
+  * @brief Check whether the RTC Tamper and Timestamp associated Exti line interrupt flag is set or not.
+  * @retval Line Status.
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_GET_FLAG()         (EXTI->PR & RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT)
+
+/**
+  * @brief Clear the RTC Tamper and Timestamp associated Exti line flag.
+  * @retval None.
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_CLEAR_FLAG()       (EXTI->PR = RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT)
+
+/**
+  * @brief Generate a Software interrupt on the RTC Tamper and Timestamp associated Exti line
+  * @retval None.
+  */
+#define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_GENERATE_SWIT()    (EXTI->SWIER |= RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT)
 
 /**
   * @}
@@ -887,17 +1185,17 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t T
 void              HAL_RTCEx_TamperTimeStampIRQHandler(RTC_HandleTypeDef *hrtc);
 
 void              HAL_RTCEx_Tamper1EventCallback(RTC_HandleTypeDef *hrtc);
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
 void              HAL_RTCEx_Tamper2EventCallback(RTC_HandleTypeDef *hrtc);
 void              HAL_RTCEx_Tamper3EventCallback(RTC_HandleTypeDef *hrtc);
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 void              HAL_RTCEx_TimeStampEventCallback(RTC_HandleTypeDef *hrtc);
 HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
 HAL_StatusTypeDef HAL_RTCEx_PollForTamper1Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
 HAL_StatusTypeDef HAL_RTCEx_PollForTamper2Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
 HAL_StatusTypeDef HAL_RTCEx_PollForTamper3Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 /**
   * @}
   */
@@ -926,13 +1224,13 @@ uint32_t          HAL_RTCEx_BKUPRead(RTC_HandleTypeDef *hrtc, uint32_t BackupReg
 
 HAL_StatusTypeDef HAL_RTCEx_SetCoarseCalib(RTC_HandleTypeDef *hrtc, uint32_t CalibSign, uint32_t Value);
 HAL_StatusTypeDef HAL_RTCEx_DeactivateCoarseCalib(RTC_HandleTypeDef *hrtc);
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined (STM32L152xE) || defined (STM32L162xE)   
-HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod, uint32_t SmoothCalibPlusPulses, uint32_t SmouthCalibMinusPulsesValue);
+#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)   
+HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod, uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue);
 HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift(RTC_HandleTypeDef *hrtc, uint32_t ShiftAdd1S, uint32_t ShiftSubFS);
 HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut(RTC_HandleTypeDef *hrtc, uint32_t CalibOutput);
 #else
 HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut(RTC_HandleTypeDef *hrtc);
-#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L152xE || STM32L162xE */
+#endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 HAL_StatusTypeDef HAL_RTCEx_DeactivateCalibrationOutPut(RTC_HandleTypeDef *hrtc);
 HAL_StatusTypeDef HAL_RTCEx_SetRefClock(RTC_HandleTypeDef *hrtc);
 HAL_StatusTypeDef HAL_RTCEx_DeactivateRefClock(RTC_HandleTypeDef *hrtc);
@@ -956,6 +1254,28 @@ HAL_StatusTypeDef HAL_RTCEx_PollForAlarmBEvent(RTC_HandleTypeDef *hrtc, uint32_t
   * @}
   */ 
   
+/* Private types -------------------------------------------------------------*/ 
+/* Private variables ---------------------------------------------------------*/
+/* Private constants ---------------------------------------------------------*/
+/** @defgroup RTCEx_Private_Constants RTCEx Private Constants
+  * @{
+  */
+#define RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT  (0x00080000U)  /*!< External interrupt line 19 Connected to the RTC Tamper and Time Stamp events */                                               
+#define RTC_EXTI_LINE_WAKEUPTIMER_EVENT       (0x00100000U)  /*!< External interrupt line 20 Connected to the RTC Wakeup event */                                               
+
+/**
+  * @}
+  */
+
+/* Private macros ------------------------------------------------------------*/
+/** @defgroup RTCEx_Private_Macros RTCEx Private Macros
+  * @{
+  */
+
+/**
+  * @}
+  */
+
 /**
   * @}
   */ 

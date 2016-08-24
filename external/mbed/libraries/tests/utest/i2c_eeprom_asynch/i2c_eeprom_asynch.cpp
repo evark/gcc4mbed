@@ -28,6 +28,10 @@
 #define TEST_SDA_PIN PTE25
 #define TEST_SCL_PIN PTE24
 
+#elif defined(TARGET_K66F)
+#define TEST_SDA_PIN PTD9
+#define TEST_SCL_PIN PTD8
+
 #elif defined(TARGET_EFM32LG_STK3600) || defined(TARGET_EFM32GG_STK3700) || defined(TARGET_EFM32WG_STK3800)
 #define TEST_SDA_PIN PD6
 #define TEST_SCL_PIN PD7
@@ -39,6 +43,13 @@
 #elif defined(TARGET_EFM32HG_STK3400)
 #define TEST_SDA_PIN PD6
 #define TEST_SCL_PIN PD7
+
+#elif defined(TARGET_RZ_A1H)
+#define TEST_SDA_PIN P1_3
+#define TEST_SCL_PIN P1_2
+void sleep()
+{
+}
 
 #else
 #error Target not supported

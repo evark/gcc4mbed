@@ -2,13 +2,13 @@
   ******************************************************************************
   * @file    stm32l1xx_hal_rtc.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    5-September-2014
+  * @version V1.2.0
+  * @date    01-July-2016
   * @brief   Header file of RTC HAL module.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2014 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -150,8 +150,8 @@ typedef struct
 /** @defgroup RTC_Hour_Formats Hour Formats
   * @{
   */ 
-#define RTC_HOURFORMAT_24              ((uint32_t)0x00000000)
-#define RTC_HOURFORMAT_12              ((uint32_t)0x00000040)
+#define RTC_HOURFORMAT_24              (0x00000000U)
+#define RTC_HOURFORMAT_12              (0x00000040U)
 
 #define IS_RTC_HOUR_FORMAT(FORMAT)     (((FORMAT) == RTC_HOURFORMAT_12) || \
                                         ((FORMAT) == RTC_HOURFORMAT_24))
@@ -162,8 +162,8 @@ typedef struct
 /** @defgroup RTC_Output_Polarity_Definitions Outpout Polarity
   * @{
   */ 
-#define RTC_OUTPUT_POLARITY_HIGH       ((uint32_t)0x00000000)
-#define RTC_OUTPUT_POLARITY_LOW        ((uint32_t)0x00100000)
+#define RTC_OUTPUT_POLARITY_HIGH       (0x00000000U)
+#define RTC_OUTPUT_POLARITY_LOW        (0x00100000U)
 
 #define IS_RTC_OUTPUT_POL(POL) (((POL) == RTC_OUTPUT_POLARITY_HIGH) || \
                                 ((POL) == RTC_OUTPUT_POLARITY_LOW))
@@ -174,8 +174,8 @@ typedef struct
 /** @defgroup RTC_Output_Type_ALARM_OUT Alarm Output Type
   * @{
   */ 
-#define RTC_OUTPUT_TYPE_OPENDRAIN      ((uint32_t)0x00000000)
-#define RTC_OUTPUT_TYPE_PUSHPULL       ((uint32_t)0x00040000)
+#define RTC_OUTPUT_TYPE_OPENDRAIN      (0x00000000U)
+#define RTC_OUTPUT_TYPE_PUSHPULL       (0x00040000U)
 
 #define IS_RTC_OUTPUT_TYPE(TYPE) (((TYPE) == RTC_OUTPUT_TYPE_OPENDRAIN) || \
                                   ((TYPE) == RTC_OUTPUT_TYPE_PUSHPULL))
@@ -217,9 +217,9 @@ typedef struct
 /** @defgroup RTC_DayLightSaving_Definitions DayLightSaving
   * @{
   */ 
-#define RTC_DAYLIGHTSAVING_SUB1H       ((uint32_t)0x00020000)
-#define RTC_DAYLIGHTSAVING_ADD1H       ((uint32_t)0x00010000)
-#define RTC_DAYLIGHTSAVING_NONE        ((uint32_t)0x00000000)
+#define RTC_DAYLIGHTSAVING_SUB1H       (0x00020000U)
+#define RTC_DAYLIGHTSAVING_ADD1H       (0x00010000U)
+#define RTC_DAYLIGHTSAVING_NONE        (0x00000000U)
 
 #define IS_RTC_DAYLIGHT_SAVING(SAVE) (((SAVE) == RTC_DAYLIGHTSAVING_SUB1H) || \
                                       ((SAVE) == RTC_DAYLIGHTSAVING_ADD1H) || \
@@ -231,8 +231,8 @@ typedef struct
 /** @defgroup RTC_StoreOperation_Definitions StoreOperation
   * @{
   */ 
-#define RTC_STOREOPERATION_RESET        ((uint32_t)0x00000000)
-#define RTC_STOREOPERATION_SET          ((uint32_t)0x00040000)
+#define RTC_STOREOPERATION_RESET        (0x00000000U)
+#define RTC_STOREOPERATION_SET          (0x00040000U)
 
 #define IS_RTC_STORE_OPERATION(OPERATION) (((OPERATION) == RTC_STOREOPERATION_RESET) || \
                                            ((OPERATION) == RTC_STOREOPERATION_SET))
@@ -243,10 +243,10 @@ typedef struct
 /** @defgroup RTC_Input_parameter_format_definitions Input Parameter Format
   * @{
   */ 
-#define FORMAT_BIN                      ((uint32_t)0x000000000)
-#define FORMAT_BCD                      ((uint32_t)0x000000001)
+#define RTC_FORMAT_BIN                      (0x000000000U)
+#define RTC_FORMAT_BCD                      (0x000000001U)
 
-#define IS_RTC_FORMAT(FORMAT) (((FORMAT) == FORMAT_BIN) || ((FORMAT) == FORMAT_BCD))
+#define IS_RTC_FORMAT(FORMAT) (((FORMAT) == RTC_FORMAT_BIN) || ((FORMAT) == RTC_FORMAT_BCD))
 /**
   * @}
   */
@@ -324,8 +324,8 @@ typedef struct
 /** @defgroup RTC_AlarmDateWeekDay_Definitions AlarmDateWeekDay Definitions 
   * @{
   */ 
-#define RTC_ALARMDATEWEEKDAYSEL_DATE      ((uint32_t)0x00000000)
-#define RTC_ALARMDATEWEEKDAYSEL_WEEKDAY   ((uint32_t)0x40000000)
+#define RTC_ALARMDATEWEEKDAYSEL_DATE      (0x00000000U)
+#define RTC_ALARMDATEWEEKDAYSEL_WEEKDAY   (0x40000000U)
 
 #define IS_RTC_ALARM_DATE_WEEKDAY_SEL(SEL) (((SEL) == RTC_ALARMDATEWEEKDAYSEL_DATE) || \
                                             ((SEL) == RTC_ALARMDATEWEEKDAYSEL_WEEKDAY))
@@ -337,14 +337,14 @@ typedef struct
 /** @defgroup RTC_AlarmMask_Definitions Alarm Mask Definitions
   * @{
   */ 
-#define RTC_ALARMMASK_NONE                ((uint32_t)0x00000000)
+#define RTC_ALARMMASK_NONE                (0x00000000U)
 #define RTC_ALARMMASK_DATEWEEKDAY         RTC_ALRMAR_MSK4
 #define RTC_ALARMMASK_HOURS               RTC_ALRMAR_MSK3
 #define RTC_ALARMMASK_MINUTES             RTC_ALRMAR_MSK2
 #define RTC_ALARMMASK_SECONDS             RTC_ALRMAR_MSK1
-#define RTC_ALARMMASK_ALL                 ((uint32_t)0x80808080)
+#define RTC_ALARMMASK_ALL                 (0x80808080U)
 
-#define IS_ALARM_MASK(MASK)  (((MASK) & 0x7F7F7F7F) == (uint32_t)RESET)
+#define IS_RTC_ALARM_MASK(MASK)  (((MASK) & 0x7F7F7F7F) == (uint32_t)RESET)
 /**
   * @}
   */ 
@@ -355,7 +355,7 @@ typedef struct
 #define RTC_ALARM_A                       RTC_CR_ALRAE
 #define RTC_ALARM_B                       RTC_CR_ALRBE
 
-#define IS_ALARM(ALARM)      (((ALARM) == RTC_ALARM_A) || ((ALARM) == RTC_ALARM_B))
+#define IS_RTC_ALARM(ALARM)      (((ALARM) == RTC_ALARM_A) || ((ALARM) == RTC_ALARM_B))
 /**
   * @}
   */ 
@@ -396,6 +396,7 @@ typedef struct
                             (__HANDLE__)->Instance->WPR = 0xFF;   \
                           } while(0)                            
  
+
 /**
   * @brief  Enable the RTC ALARMA peripheral.
   * @param  __HANDLE__: specifies the RTC handle.
@@ -449,95 +450,126 @@ typedef struct
 /**
   * @brief  Check whether the specified RTC Alarm interrupt has occurred or not.
   * @param  __HANDLE__: specifies the RTC handle.
-  * @param  __FLAG__: specifies the RTC Alarm interrupt sources to be enabled or disabled.
+  * @param  __INTERRUPT__: specifies the RTC Alarm interrupt sources to check.
   *         This parameter can be:
   *            @arg RTC_IT_ALRA: Alarm A interrupt
-  *            @arg RTC_IT_ALRB: Alarm B interrupt  
+  *            @arg RTC_IT_ALRB: Alarm B interrupt
   * @retval None
   */
-#define __HAL_RTC_ALARM_GET_IT(__HANDLE__, __FLAG__)                  ((((((__HANDLE__)->Instance->ISR)& ((__FLAG__)>> 4)) & 0x0000FFFF) != RESET)? SET : RESET)
+#define __HAL_RTC_ALARM_GET_IT(__HANDLE__, __INTERRUPT__)  (((((__HANDLE__)->Instance->ISR)& ((__INTERRUPT__)>> 4)) != RESET)? SET : RESET)
+
+/**
+  * @brief  Check whether the specified RTC Alarm interrupt has been enabled or not.
+  * @param  __HANDLE__: specifies the RTC handle.
+  * @param  __INTERRUPT__: specifies the RTC Alarm interrupt sources to check.
+  *         This parameter can be:
+  *            @arg RTC_IT_ALRA: Alarm A interrupt
+  *            @arg RTC_IT_ALRB: Alarm B interrupt
+  * @retval None
+  */
+#define __HAL_RTC_ALARM_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)     (((((__HANDLE__)->Instance->CR) & (__INTERRUPT__)) != RESET) ? SET : RESET)
 
 /**
   * @brief  Get the selected RTC Alarm's flag status.
   * @param  __HANDLE__: specifies the RTC handle.
-  * @param  __FLAG__: specifies the RTC Alarm Flag sources to be enabled or disabled.
-  *          This parameter can be:
+  * @param  __FLAG__: specifies the RTC Alarm Flag sources to check.
+  *         This parameter can be:
   *            @arg RTC_FLAG_ALRAF
   *            @arg RTC_FLAG_ALRBF
-  *            @arg RTC_FLAG_ALRAWF     
-  *            @arg RTC_FLAG_ALRBWF    
+  *            @arg RTC_FLAG_ALRAWF
+  *            @arg RTC_FLAG_ALRBWF
   * @retval None
   */
-#define __HAL_RTC_ALARM_GET_FLAG(__HANDLE__, __FLAG__)                (((((__HANDLE__)->Instance->ISR) & (__FLAG__)) != RESET)? SET : RESET)
+#define __HAL_RTC_ALARM_GET_FLAG(__HANDLE__, __FLAG__)   (((((__HANDLE__)->Instance->ISR) & (__FLAG__)) != RESET)? SET : RESET)
 
 /**
   * @brief  Clear the RTC Alarm's pending flags.
   * @param  __HANDLE__: specifies the RTC handle.
-  * @param  __FLAG__: specifies the RTC Alarm Flag sources to be enabled or disabled.
-  *         This parameter can be:
-  *            @arg RTC_FLAG_ALRAF
-  *            @arg RTC_FLAG_ALRBF 
+  * @param  __FLAG__: specifies the RTC Alarm Flag sources to clear.
+  *          This parameter can be:
+  *             @arg RTC_FLAG_ALRAF
+  *             @arg RTC_FLAG_ALRBF
   * @retval None
   */
-#define __HAL_RTC_ALARM_CLEAR_FLAG(__HANDLE__, __FLAG__)                  ((__HANDLE__)->Instance->ISR) = (~(((__FLAG__) | RTC_ISR_INIT)& 0x0000FFFF)|((__HANDLE__)->Instance->ISR & RTC_ISR_INIT))
-
+#define __HAL_RTC_ALARM_CLEAR_FLAG(__HANDLE__, __FLAG__)   ((__HANDLE__)->Instance->ISR) = (~((__FLAG__) | RTC_ISR_INIT) | ((__HANDLE__)->Instance->ISR & RTC_ISR_INIT))
   
-#define RTC_EXTI_LINE_ALARM_EVENT             ((uint32_t)0x00020000)  /*!< External interrupt line 17 Connected to the RTC Alarm event */
-#define RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT  ((uint32_t)0x00080000)  /*!< External interrupt line 19 Connected to the RTC Tamper and Time Stamp events */                                               
-#define RTC_EXTI_LINE_WAKEUPTIMER_EVENT       ((uint32_t)0x00100000)  /*!< External interrupt line 20 Connected to the RTC Wakeup event */                                               
+/**
+  * @brief  Enable interrupt on the RTC Alarm associated Exti line.
+  * @retval None
+  */
+#define __HAL_RTC_ALARM_EXTI_ENABLE_IT()            (EXTI->IMR |= RTC_EXTI_LINE_ALARM_EVENT)
 
 /**
-  * @brief  Enable the RTC Exti line.
-  * @param  __EXTILINE__: specifies the RTC Exti sources to be enabled or disabled.
-  *         This parameter can be:
-  *            @arg RTC_EXTI_LINE_ALARM_EVENT   
-  *            @arg RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT 
-  *            @arg RTC_EXTI_LINE_WAKEUPTIMER_EVENT      
+  * @brief  Disable interrupt on the RTC Alarm associated Exti line.
   * @retval None
+  */
+#define __HAL_RTC_ALARM_EXTI_DISABLE_IT()           (EXTI->IMR &= ~(RTC_EXTI_LINE_ALARM_EVENT))
+
+/**
+  * @brief  Enable event on the RTC Alarm associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_ALARM_EXTI_ENABLE_EVENT()         (EXTI->EMR |= RTC_EXTI_LINE_ALARM_EVENT)
+
+/**
+  * @brief  Disable event on the RTC Alarm associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_ALARM_EXTI_DISABLE_EVENT()         (EXTI->EMR &= ~(RTC_EXTI_LINE_ALARM_EVENT))
+
+/**
+  * @brief  Enable falling edge trigger on the RTC Alarm associated Exti line.  
+  * @retval None.
+  */
+#define __HAL_RTC_ALARM_EXTI_ENABLE_FALLING_EDGE()   (EXTI->FTSR |= RTC_EXTI_LINE_ALARM_EVENT)
+
+/**
+  * @brief  Disable falling edge trigger on the RTC Alarm associated Exti line.  
+  * @retval None.
+  */
+#define __HAL_RTC_ALARM_EXTI_DISABLE_FALLING_EDGE()  (EXTI->FTSR &= ~(RTC_EXTI_LINE_ALARM_EVENT))
+
+/**
+  * @brief  Enable rising edge trigger on the RTC Alarm associated Exti line.  
+  * @retval None.
   */                                         
-#define __HAL_RTC_EXTI_ENABLE_IT(__EXTILINE__)   (EXTI->IMR |= (__EXTILINE__))
-
-/* alias define maintained for legacy */
-#define __HAL_RTC_ENABLE_IT   __HAL_RTC_EXTI_ENABLE_IT
+#define __HAL_RTC_ALARM_EXTI_ENABLE_RISING_EDGE()    (EXTI->RTSR |= RTC_EXTI_LINE_ALARM_EVENT)
 
 /**
-  * @brief  Disable the RTC Exti line.
-  * @param  __EXTILINE__: specifies the RTC Exti sources to be enabled or disabled.
-  *         This parameter can be:
-  *            @arg RTC_EXTI_LINE_ALARM_EVENT   
-  *            @arg RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT 
-  *            @arg RTC_EXTI_LINE_WAKEUPTIMER_EVENT     
-  * @retval None
+  * @brief  Disable rising edge trigger on the RTC Alarm associated Exti line.  
+  * @retval None.
   */
-#define __HAL_RTC_EXTI_DISABLE_IT(__EXTILINE__)  (EXTI->IMR &= ~(__EXTILINE__))
-
-/* alias define maintained for legacy */
-#define __HAL_RTC_DISABLE_IT   __HAL_RTC_EXTI_DISABLE_IT
+#define __HAL_RTC_ALARM_EXTI_DISABLE_RISING_EDGE()   (EXTI->RTSR &= ~(RTC_EXTI_LINE_ALARM_EVENT))
 
 /**
-  * @brief  Generates a Software interrupt on selected EXTI line.
-  * @param  __EXTILINE__: specifies the RTC Exti sources to be enabled or disabled.
-  *         This parameter can be:
-  *            @arg RTC_EXTI_LINE_ALARM_EVENT
-  *            @arg RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT
-  *            @arg RTC_EXTI_LINE_WAKEUPTIMER_EVENT
-  * @retval None
+  * @brief  Enable rising & falling edge trigger on the RTC Alarm associated Exti line.  
+  * @retval None.
   */
-#define __HAL_RTC_EXTI_GENERATE_SWIT(__EXTILINE__) (EXTI->SWIER |= (__EXTILINE__))
+#define __HAL_RTC_ALARM_EXTI_ENABLE_RISING_FALLING_EDGE() do { __HAL_RTC_ALARM_EXTI_ENABLE_RISING_EDGE();__HAL_RTC_ALARM_EXTI_ENABLE_FALLING_EDGE(); } while(0);
 
 /**
-  * @brief  Clear the RTC Exti flags.
-  * @param  __FLAG__: specifies the RTC Exti sources to be enabled or disabled.
-  *         This parameter can be:
-  *            @arg RTC_EXTI_LINE_ALARM_EVENT   
-  *            @arg RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT 
-  *            @arg RTC_EXTI_LINE_WAKEUPTIMER_EVENT      
-  * @retval None
+  * @brief  Disable rising & falling edge trigger on the RTC Alarm associated Exti line.  
+  * @retval None.
   */
-#define __HAL_RTC_EXTI_CLEAR_FLAG(__FLAG__)  (EXTI->PR = (__FLAG__))
+#define __HAL_RTC_ALARM_EXTI_DISABLE_RISING_FALLING_EDGE() do { __HAL_RTC_ALARM_EXTI_DISABLE_RISING_EDGE();__HAL_RTC_ALARM_EXTI_DISABLE_FALLING_EDGE(); } while(0);
 
-/* alias define maintained for legacy */
-#define __HAL_RTC_CLEAR_FLAG   __HAL_RTC_EXTI_CLEAR_FLAG
+/**
+  * @brief Check whether the RTC Alarm associated Exti line interrupt flag is set or not.
+  * @retval Line Status.
+  */
+#define __HAL_RTC_ALARM_EXTI_GET_FLAG()              (EXTI->PR & RTC_EXTI_LINE_ALARM_EVENT)
+
+/**
+  * @brief Clear the RTC Alarm associated Exti line flag.
+  * @retval None.
+  */
+#define __HAL_RTC_ALARM_EXTI_CLEAR_FLAG()            (EXTI->PR = RTC_EXTI_LINE_ALARM_EVENT)
+
+/**
+  * @brief Generate a Software interrupt on RTC Alarm associated Exti line.
+  * @retval None.
+  */
+#define __HAL_RTC_ALARM_EXTI_GENERATE_SWIT()         (EXTI->SWIER |= RTC_EXTI_LINE_ALARM_EVENT)
 
 /**
   * @}
@@ -616,9 +648,39 @@ HAL_RTCStateTypeDef HAL_RTC_GetState(RTC_HandleTypeDef *hrtc);
 /** @addtogroup RTC_Internal_Functions
   * @{
   */
+/* Private types -------------------------------------------------------------*/ 
+/* Private variables ---------------------------------------------------------*/
+/* Private constants ---------------------------------------------------------*/
+/** @defgroup RTC_Private_Constants RTC Private Constants
+  * @{
+  */
+
+#define RTC_EXTI_LINE_ALARM_EVENT             ((uint32_t)EXTI_IMR_MR17)  /*!< External interrupt line 17 Connected to the RTC Alarm event */
+
+/**
+  * @}
+  */
+
+/* Private macros ------------------------------------------------------------*/
+/** @defgroup RTC_Private_Macros RTC Private Macros
+  * @{
+  */
+
+/**
+  * @}
+  */
+
+/* Private functions ---------------------------------------------------------*/
+/** @defgroup RTC_Private_Functions RTC Private Functions
+  * @{
+  */
 HAL_StatusTypeDef  RTC_EnterInitMode(RTC_HandleTypeDef* hrtc);
 uint8_t            RTC_ByteToBcd2(uint8_t Value);
 uint8_t            RTC_Bcd2ToByte(uint8_t Value);
+
+/**
+  * @}
+  */
   
 /**
   * @}

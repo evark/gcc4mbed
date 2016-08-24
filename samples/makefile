@@ -16,19 +16,9 @@
 DIRS := HelloWorld\
         Blink\
         Ticker\
-        StdIO\
-        LocalFileSystem\
-        FileTest\
-        SdPerf\
         rtos_basic\
-        TCPSocket_HelloWorld\
-        USBMouse\
-        USBHostMouse\
-        USBHostKeyboard\
-        USBHostMSD\
-        USBHostHub\
-        USBHostSerial\
-        BLEHeartRate
+        StdIO
+
 DIRSCLEAN    := $(addsuffix .clean,$(DIRS))
 DIRSCLEANALL := $(addsuffix .cleanall,$(DIRS))
 

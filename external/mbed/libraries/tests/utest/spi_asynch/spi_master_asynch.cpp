@@ -34,7 +34,7 @@
 #define TEST_BYTE_RX TEST_BYTE3
 #define TEST_BYTE_TX_BASE TEST_BYTE5
 
-#if defined(TARGET_K64F)
+#if defined(TARGET_K64F) || defined(TARGET_K66F)
 #define TEST_MOSI_PIN PTD2
 #define TEST_MISO_PIN PTD3
 #define TEST_SCLK_PIN PTD1
@@ -57,6 +57,12 @@
 #define TEST_MISO_PIN PE11
 #define TEST_SCLK_PIN PE12
 #define TEST_CS_PIN   PE13
+
+#elif defined(TARGET_RZ_A1H)
+#define TEST_MOSI_PIN P10_14
+#define TEST_MISO_PIN P10_15
+#define TEST_SCLK_PIN P10_12
+#define TEST_CS_PIN   P10_13
 
 #else
 #error Target not supported

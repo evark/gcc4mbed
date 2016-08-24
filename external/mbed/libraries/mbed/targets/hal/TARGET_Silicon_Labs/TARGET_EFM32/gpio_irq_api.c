@@ -5,26 +5,19 @@
  * <b>(C) Copyright 2015 Silicon Labs, http://www.silabs.com</b>
  *******************************************************************************
  *
- * Permission is granted to anyone to use this software for any purpose,
- * including commercial applications, and to alter it and redistribute it
- * freely, subject to the following restrictions:
+ * SPDX-License-Identifier: Apache-2.0
  *
- * 1. The origin of this software must not be misrepresented; you must not
- *    claim that you wrote the original software.
- * 2. Altered source versions must be plainly marked as such, and must not be
- *    misrepresented as being the original software.
- * 3. This notice may not be removed or altered from any source distribution.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * DISCLAIMER OF WARRANTY/LIMITATION OF REMEDIES: Silicon Labs has no
- * obligation to support this Software. Silicon Labs is providing the
- * Software "AS IS", with no express or implied warranties of any kind,
- * including, but not limited to, any implied warranties of merchantability
- * or fitness for any particular purpose or warranties against infringement
- * of any proprietary rights of a third party.
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Silicon Labs will not be liable for any consequential, incidental, or
- * special damages, or any other relief, or for any claim by any third party,
- * arising from your use of this Software.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
  ******************************************************************************/
 
@@ -103,8 +96,10 @@ int gpio_irq_init(gpio_irq_t *obj, PinName pin, gpio_irq_handler handler, uint32
     // Init pins
     gpio_irq_preinit(obj, pin);
     // Initialize GPIO interrupt dispatcher
+    NVIC_SetVector(GPIO_ODD_IRQn, (uint32_t)GPIO_ODD_IRQHandler);
     NVIC_ClearPendingIRQ(GPIO_ODD_IRQn);
     NVIC_EnableIRQ(GPIO_ODD_IRQn);
+    NVIC_SetVector(GPIO_EVEN_IRQn, (uint32_t)GPIO_EVEN_IRQHandler);
     NVIC_ClearPendingIRQ(GPIO_EVEN_IRQn);
     NVIC_EnableIRQ(GPIO_EVEN_IRQn);
 

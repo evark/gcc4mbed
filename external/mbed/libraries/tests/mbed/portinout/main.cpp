@@ -9,6 +9,15 @@
 #define P2_2    (1 << 3)
 #define PORT_2  PortC
 
+#elif defined(TARGET_K66F)
+#define P1_1    (1 << 3)
+#define P1_2    (1 << 4)
+#define PORT_1  PortC
+
+#define P2_1    (1 << 5)
+#define P2_2    (1 << 2)
+#define PORT_2  PortC
+
 #elif defined(TARGET_LPC11U24)
 #define P1_1    (1 <<  9) // p0.9
 #define P1_2    (1 <<  8) // p0.8
@@ -174,6 +183,15 @@
 #define P2_1    (1 << 10)  /*PB10*/
 #define P2_2    (1 << 11)  /*PB11*/
 #define PORT_2  PortB
+
+#elif defined(TARGET_VK_RZ_A1H)
+#define P1_1    (1 << 2)  /*P3_2*/
+#define P1_2    (1 << 7)  /*P3_7*/
+#define PORT_1  Port3
+
+#define P2_1    (1 << 6)  /*P5_6*/
+#define P2_2    (1 << 1)  /*P5_1*/
+#define PORT_2  Port5
 
 #endif
 

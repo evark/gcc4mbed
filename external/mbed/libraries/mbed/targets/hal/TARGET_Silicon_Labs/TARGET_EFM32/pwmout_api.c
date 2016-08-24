@@ -5,26 +5,19 @@
  * <b>(C) Copyright 2015 Silicon Labs, http://www.silabs.com</b>
  *******************************************************************************
  *
- * Permission is granted to anyone to use this software for any purpose,
- * including commercial applications, and to alter it and redistribute it
- * freely, subject to the following restrictions:
+ * SPDX-License-Identifier: Apache-2.0
  *
- * 1. The origin of this software must not be misrepresented; you must not
- *    claim that you wrote the original software.
- * 2. Altered source versions must be plainly marked as such, and must not be
- *    misrepresented as being the original software.
- * 3. This notice may not be removed or altered from any source distribution.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * DISCLAIMER OF WARRANTY/LIMITATION OF REMEDIES: Silicon Labs has no
- * obligation to support this Software. Silicon Labs is providing the
- * Software "AS IS", with no express or implied warranties of any kind,
- * including, but not limited to, any implied warranties of merchantability
- * or fitness for any particular purpose or warranties against infringement
- * of any proprietary rights of a third party.
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Silicon Labs will not be liable for any consequential, incidental, or
- * special damages, or any other relief, or for any claim by any third party,
- * arising from your use of this Software.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
  ******************************************************************************/
 
@@ -44,7 +37,7 @@
 #include "em_gpio.h"
 #include "em_timer.h"
 
-static int pwm_prescaler_div;
+static uint32_t pwm_prescaler_div;
 
 float   pwmout_calculate_duty(uint32_t width_cycles, uint32_t period_cycles);
 void    pwmout_write_channel(uint32_t channel, float value);
@@ -139,7 +132,7 @@ bool pwmout_all_inactive(void) {
         return true;
     }
 #else
-    if(PWM_TIMER->ROUTE == PWM_ROUTE) {
+    if(PWM_TIMER->ROUTE & (TIMER_ROUTE_CC0PEN | TIMER_ROUTE_CC1PEN | TIMER_ROUTE_CC2PEN)) {
         return true;
     }
 #endif
@@ -218,7 +211,11 @@ void pwmout_init(pwmout_t *obj, PinName pin)
 #else
     // On P1, the route location is statically defined for the entire timer.
     PWM_TIMER->ROUTE &= ~_TIMER_ROUTE_LOCATION_MASK;
-    PWM_TIMER->ROUTE |= PWM_ROUTE;
+if(pwmout_all_inactive()) {
+        PWM_TIMER->ROUTE |= pinmap_find_function(pin,PinMap_PWM) << _TIMER_ROUTE_LOCATION_SHIFT;
+    } else {
+        MBED_ASSERT((pinmap_find_function(pin,PinMap_PWM) << _TIMER_ROUTE_LOCATION_SHIFT) == (PWM_TIMER->ROUTE & _TIMER_ROUTE_LOCATION_MASK));
+    }
 #endif
 
     // Set default 20ms frequency and 0ms pulse width
@@ -288,7 +285,7 @@ void pwmout_period(pwmout_t *obj, float seconds)
     // This gives us max resolution for a given period
 
     //The value of the top register if prescaler is set to 0
-    int cycles = REFERENCE_FREQUENCY * seconds;
+    uint32_t cycles = (uint32_t)REFERENCE_FREQUENCY * seconds;
     pwm_prescaler_div = 0;
 
     //The top register is only 16 bits, so we keep dividing till we are below 0xFFFF
