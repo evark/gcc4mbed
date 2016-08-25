@@ -9,5 +9,9 @@ Changes from official Repository
 
 Notes
 -----
-- device.h defines are generated from targets.json in mbed SDK. All defines must be declared in build/BOARD-device.mk makefiles as the device.h file is empty. This breaks all platforms of gcc4mbed.
+- device.h defines are generated from targets.json in mbed SDK (Versions>119). All defines must be declared in build/BOARD-device.mk makefiles as the device.h file is empty. This breaks all platforms of gcc4mbed, until fix of makefile.
+
+- makefiles fixed only for the following boars:
+    - NUCLEO_F401RE
+    - NUCLEO_L476RG
 
